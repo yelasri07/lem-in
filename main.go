@@ -15,6 +15,7 @@ func main() {
 		fmt.Println("File error")
 		return
 	}
+	defer file.Close()
 
 	lines := []string{}
 
