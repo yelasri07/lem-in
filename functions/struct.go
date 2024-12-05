@@ -21,45 +21,32 @@ func NewInfos() *Infos {
 }
 
 func (inf *Infos) Treatment(lines []string) string {
-	nbAnts := strings.Fields(lines[0])
-
-	if len(nbAnts) != 1 {
-		return "Error number ants"
-	}
-
-	nAnts, err := strconv.Atoi(nbAnts[0])
+	var err error
+	inf.NbOfants, err = strconv.Atoi(lines[0])
 	if err != nil {
 		return "invalid number of ants"
 	}
 
-	if nAnts <= 0 {
+	if inf.NbOfants <= 0 {
 		return "Number of ants is negative"
 	}
 
-	inf.NbOfants = nAnts
-	start := false
-	lines = lines[1:]
-	for i := 0; i < len(lines); i++ {
-		if lines[i] == "##start" && inf.Start != "" {
-			return "Invalid form of file."
-		}
-
+	for i := 1; i < len(lines); i++ {
 		if lines[i] == "##start" {
-			start = true
+		
 			continue
 		}
 		room := strings.Fields(lines[i])
 
-		if start && isValidRomm(room) && inf.Start == "" {
+		if isValidRomm(room) && inf.Start == "" {
 			inf.Start = room[0]
 			inf.Rooms[room[0]] = room[1] + " " + room[2]
-			start = false
+			
 		}
 
 		if isValidRomm(room) {
 			inf.Rooms[room[0]] = room[1] + " " + room[2]
 		}
-
 	}
 
 	return ""
@@ -69,7 +56,7 @@ func isValidRomm(room []string) bool {
 	if len(room) != 3 {
 		return false
 	}
-	if room[0][0] == 'L' || room[0][0] == 'l' || room[0][0] == '#' {
+	if room[0][0] == 'L' || room[0][0] == 'l'{
 		return false
 	}
 	_, err := strconv.Atoi(room[1])

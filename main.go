@@ -9,6 +9,18 @@ import (
 	"lemin/functions"
 )
 
+func CheckDuplicates(lines []string) bool {
+	for i := 0; i < len(lines); i++ {
+		for j := i + 1; j < len(lines); j++ {
+			if lines[i] == lines[j] {
+				return false
+			}
+		}
+	}
+
+	return true
+}
+
 func main() {
 	file, err := os.Open("sample.txt")
 	if err != nil {
@@ -23,13 +35,19 @@ func main() {
 
 	for scanner.Scan() {
 		line := strings.TrimSpace(scanner.Text())
-		if line != "" {
-			lines = append(lines, line)
+		if line == "" || (line[0] == '#' && line != "##start" && line != "##end") {
+			continue
 		}
+		lines = append(lines, line)
 	}
 
-	if len(lines) == 0 {
-		fmt.Println("error len equal 0")
+	if !CheckDuplicates(lines) {
+		fmt.Println("error data duplicates")
+		return
+	}
+
+	if len(lines) < 6 {
+		fmt.Println("error len lines")
 		return
 	}
 
