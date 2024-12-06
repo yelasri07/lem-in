@@ -14,6 +14,8 @@ type GraphData struct {
 	Tunneles map[string]string
 }
 
+
+// Create an instance from the struct GraphData
 func NewGraphData() *GraphData {
 	return &GraphData{
 		Rooms:    make(map[string][]string),
@@ -21,6 +23,8 @@ func NewGraphData() *GraphData {
 	}
 }
 
+
+// ValidateFileContent is a method that validates the content inside the file
 func (g *GraphData) ValidateFileContent(lines []string) string {
 	var err error
 	g.NbOfants, err = strconv.Atoi(lines[0])

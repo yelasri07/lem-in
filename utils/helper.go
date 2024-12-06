@@ -5,6 +5,7 @@ import (
 	"strings"
 )
 
+// Check for duplicates inside the file
 func CheckDuplicates(lines []string) bool {
 	for i := 0; i < len(lines); i++ {
 		for j := i + 1; j < len(lines); j++ {
@@ -17,6 +18,7 @@ func CheckDuplicates(lines []string) bool {
 	return true
 }
 
+// Check if the room is valid or not
 func IsValidRomm(str string) bool {
 	room := strings.Fields(str)
 	if len(room) != 3 {
