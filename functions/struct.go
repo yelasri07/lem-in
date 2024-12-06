@@ -1,6 +1,7 @@
 package functions
 
 import (
+	"lemin/utils"
 	"strconv"
 	"strings"
 )
@@ -20,7 +21,7 @@ func NewInfos() *Infos {
 	}
 }
 
-func (inf *Infos) Treatment(lines []string) string {
+func (inf *Infos) ValidateFileContent(lines []string) string {
 	var err error
 	inf.NbOfants, err = strconv.Atoi(lines[0])
 	if err != nil {
@@ -33,36 +34,21 @@ func (inf *Infos) Treatment(lines []string) string {
 
 	for i := 1; i < len(lines); i++ {
 		if lines[i] == "##start" {
-		
+
 			continue
 		}
 		room := strings.Fields(lines[i])
 
-		if isValidRomm(room) && inf.Start == "" {
+		if utils.IsValidRomm(room) && inf.Start == "" {
 			inf.Start = room[0]
 			inf.Rooms[room[0]] = room[1] + " " + room[2]
-			
+
 		}
 
-		if isValidRomm(room) {
+		if utils.IsValidRomm(room) {
 			inf.Rooms[room[0]] = room[1] + " " + room[2]
 		}
 	}
 
 	return ""
-}
-
-func isValidRomm(room []string) bool {
-	if len(room) != 3 {
-		return false
-	}
-	if room[0][0] == 'L' || room[0][0] == 'l'{
-		return false
-	}
-	_, err := strconv.Atoi(room[1])
-	_, err2 := strconv.Atoi(room[2])
-	if err != nil || err2 != nil {
-		return false
-	}
-	return true
 }

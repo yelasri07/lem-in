@@ -7,19 +7,8 @@ import (
 	"strings"
 
 	"lemin/functions"
+	"lemin/utils"
 )
-
-func CheckDuplicates(lines []string) bool {
-	for i := 0; i < len(lines); i++ {
-		for j := i + 1; j < len(lines); j++ {
-			if lines[i] == lines[j] {
-				return false
-			}
-		}
-	}
-
-	return true
-}
 
 func main() {
 	file, err := os.Open("sample.txt")
@@ -41,7 +30,7 @@ func main() {
 		lines = append(lines, line)
 	}
 
-	if !CheckDuplicates(lines) {
+	if !utils.CheckDuplicates(lines) {
 		fmt.Println("error data duplicates")
 		return
 	}
@@ -53,7 +42,7 @@ func main() {
 
 	infos := functions.NewInfos()
 
-	msg := infos.Treatment(lines)
+	msg := infos.ValidateFileContent(lines)
 	if msg != "" {
 		fmt.Println(msg)
 		return
