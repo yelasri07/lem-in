@@ -40,7 +40,7 @@ func main() {
 		return
 	}
 
-	infos := models.NewInfos()
+	infos := models.NewGraphData()
 
 	msg := infos.ValidateFileContent(lines)
 	if msg != "" {

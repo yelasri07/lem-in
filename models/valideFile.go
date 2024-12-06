@@ -14,7 +14,7 @@ type GraphData struct {
 	Tunneles map[string]string
 }
 
-func NewInfos() *GraphData {
+func NewGraphData() *GraphData {
 	return &GraphData{
 		Rooms:    make(map[string][]string),
 		Tunneles: make(map[string]string),
