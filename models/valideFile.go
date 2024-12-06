@@ -33,19 +33,28 @@ func (g *GraphData) ValidateFileContent(lines []string) string {
 	}
 
 	for i := 1; i < len(lines); i++ {
-		if lines[i] == "##start" {
-
-			continue
+		if lines[len(lines)-1] == "##start" || lines[len(lines)-1] == "##end" {
+			return "there is no start or end"
 		}
+
+		if lines[i] == "##start" || lines[i] == "##end" {
+			if !utils.IsValidRomm(lines[i+1]) {
+				return "error room start or end"
+			}
+			room := strings.Fields(lines[i+1])[0]
+			if lines[i] == "##start" {
+				g.Start = room
+			} else {
+				g.End = room
+			}
+		}
+
 		room := strings.Fields(lines[i])
 
-		if utils.IsValidRomm(room) && g.Start == "" {
-			g.Start = room[0]
-			g.Rooms[room[0]] = room[1:]
-
-		}
-
-		if utils.IsValidRomm(room) {
+		if utils.IsValidRomm(lines[i]) {
+			if _,ok := g.Rooms[room[0]]; ok{
+				return "error duplicate room name"
+			}
 			g.Rooms[room[0]] = room[1:]
 		}
 	}

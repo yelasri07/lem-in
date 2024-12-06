@@ -1,6 +1,9 @@
 package utils
 
-import "strconv"
+import (
+	"strconv"
+	"strings"
+)
 
 func CheckDuplicates(lines []string) bool {
 	for i := 0; i < len(lines); i++ {
@@ -14,7 +17,8 @@ func CheckDuplicates(lines []string) bool {
 	return true
 }
 
-func IsValidRomm(room []string) bool {
+func IsValidRomm(str string) bool {
+	room := strings.Fields(str)
 	if len(room) != 3 {
 		return false
 	}

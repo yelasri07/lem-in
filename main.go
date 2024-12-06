@@ -48,7 +48,8 @@ func main() {
 		return
 	}
 
-	fmt.Println(infos.NbOfants)
-	fmt.Println(infos.Start)
+	fmt.Println("Number of ants ==>",infos.NbOfants)
+	fmt.Println("Start ==>",infos.Start)
+	fmt.Println("End ==>",infos.End)
 	fmt.Println(infos.Rooms)
 }
