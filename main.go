@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	"lemin/functions"
+	"lemin/models"
 	"lemin/utils"
 )
 
@@ -40,7 +40,7 @@ func main() {
 		return
 	}
 
-	infos := functions.NewInfos()
+	infos := models.NewInfos()
 
 	msg := infos.ValidateFileContent(lines)
 	if msg != "" {

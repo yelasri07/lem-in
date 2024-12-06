@@ -1,4 +1,4 @@
-package functions
+package models
 
 import (
 	"lemin/utils"
@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-type Infos struct {
+type GraphData struct {
 	NbOfants int
 	Start    string
 	End      string
@@ -14,21 +14,21 @@ type Infos struct {
 	Tunneles map[string]string
 }
 
-func NewInfos() *Infos {
-	return &Infos{
+func NewInfos() *GraphData {
+	return &GraphData{
 		Rooms:    make(map[string][]string),
 		Tunneles: make(map[string]string),
 	}
 }
 
-func (inf *Infos) ValidateFileContent(lines []string) string {
+func (g *GraphData) ValidateFileContent(lines []string) string {
 	var err error
-	inf.NbOfants, err = strconv.Atoi(lines[0])
+	g.NbOfants, err = strconv.Atoi(lines[0])
 	if err != nil {
 		return "invalid number of ants"
 	}
 
-	if inf.NbOfants <= 0 {
+	if g.NbOfants <= 0 {
 		return "Number of ants is negative"
 	}
 
@@ -39,14 +39,14 @@ func (inf *Infos) ValidateFileContent(lines []string) string {
 		}
 		room := strings.Fields(lines[i])
 
-		if utils.IsValidRomm(room) && inf.Start == "" {
-			inf.Start = room[0]
-			inf.Rooms[room[0]] = room[1:]
+		if utils.IsValidRomm(room) && g.Start == "" {
+			g.Start = room[0]
+			g.Rooms[room[0]] = room[1:]
 
 		}
 
 		if utils.IsValidRomm(room) {
-			inf.Rooms[room[0]] = room[1:]
+			g.Rooms[room[0]] = room[1:]
 		}
 	}
 
