@@ -10,13 +10,13 @@ type Infos struct {
 	NbOfants int
 	Start    string
 	End      string
-	Rooms    map[string]string
+	Rooms    map[string][]string
 	Tunneles map[string]string
 }
 
 func NewInfos() *Infos {
 	return &Infos{
-		Rooms:    make(map[string]string),
+		Rooms:    make(map[string][]string),
 		Tunneles: make(map[string]string),
 	}
 }
@@ -41,12 +41,12 @@ func (inf *Infos) ValidateFileContent(lines []string) string {
 
 		if utils.IsValidRomm(room) && inf.Start == "" {
 			inf.Start = room[0]
-			inf.Rooms[room[0]] = room[1] + " " + room[2]
+			inf.Rooms[room[0]] = room[1:]
 
 		}
 
 		if utils.IsValidRomm(room) {
-			inf.Rooms[room[0]] = room[1] + " " + room[2]
+			inf.Rooms[room[0]] = room[1:]
 		}
 	}
 
