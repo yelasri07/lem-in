@@ -50,5 +50,5 @@ func main() {
 	fmt.Println("Number of ants ==>", infos.NbOfants)
 	fmt.Println("Start ==>", infos.Start)
 	fmt.Println("End ==>", infos.End)
-	fmt.Println("End ==>", infos.Rooms)
+	fmt.Println("Rooms ==>", infos.Rooms)
 }
