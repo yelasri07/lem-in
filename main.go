@@ -3,10 +3,10 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"os"
-	"strings"
 	"lemin/models"
 	"lemin/utils"
+	"os"
+	"strings"
 )
 
 func main() {
@@ -47,8 +47,8 @@ func main() {
 		return
 	}
 
-	fmt.Println("Number of ants ==>",infos.NbOfants)
-	fmt.Println("Start ==>",infos.Start)
-	fmt.Println("End ==>",infos.End)
-	fmt.Println(infos.Rooms)
+	fmt.Println("Number of ants ==>", infos.NbOfants)
+	fmt.Println("Start ==>", infos.Start)
+	fmt.Println("End ==>", infos.End)
+	fmt.Println("End ==>", infos.Rooms)
 }
