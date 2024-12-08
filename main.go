@@ -29,6 +29,7 @@ func main() {
 		lines = append(lines, line)
 	}
 
+
 	if !utils.CheckDuplicates(lines) {
 		fmt.Println("error data duplicates")
 		return
@@ -50,5 +51,6 @@ func main() {
 	fmt.Println("Number of ants ==>", infos.NbOfants)
 	fmt.Println("Start ==>", infos.Start)
 	fmt.Println("End ==>", infos.End)
-	fmt.Println("Rooms ==>", infos.Rooms)
+	fmt.Println(infos.Rooms)
+	fmt.Println("tunnels==>",infos.Tunneles)
 }

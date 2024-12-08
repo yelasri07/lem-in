@@ -34,3 +34,16 @@ func IsValidRomm(str string) bool {
 	}
 	return true
 }
+
+func IsValidTunnel(str string, rooms map[string][]string) bool {
+	tunnel := strings.Split(str, "-")
+	if len(tunnel) != 2 {
+		return false
+	}
+	for _, room := range tunnel {
+		if _, exist := rooms[room]; !exist {
+			return false
+		}
+	}
+	return true
+}
