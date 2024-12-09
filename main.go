@@ -8,7 +8,12 @@ import (
 )
 
 func main() {
-	file, err := os.Open("sample.txt")
+	if len(os.Args) != 2 {
+		fmt.Println("Enter file name")
+		return
+	}
+
+	file, err := os.Open(os.Args[1])
 	if err != nil {
 		fmt.Println("File error")
 		return
