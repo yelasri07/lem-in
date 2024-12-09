@@ -51,11 +51,11 @@ func (g *GraphData) ValidateFileContent(lines []string) string {
 				g.End = room
 			}
 		}
-		if allRoomsFinded && !utils.IsValidTunnel(lines[i], g.Rooms) {
-			return "error format of file or tunnels data.."
-		}
-		if utils.IsValidTunnel(lines[i], g.Rooms) && !allRoomsFinded {
+		if utils.IsValidTunnel(lines[i]) && !allRoomsFinded {
 			allRoomsFinded = true
+		}
+		if allRoomsFinded && !utils.IsValidTunnel(lines[i]) && !utils.ContainsRoom(lines[i], g.Rooms) {
+			return "error format of file or tunnels data."
 		}
 
 		room := strings.Fields(lines[i])
@@ -65,7 +65,7 @@ func (g *GraphData) ValidateFileContent(lines []string) string {
 			}
 			g.Rooms[room[0]] = room[1:]
 		}
-		if allRoomsFinded && utils.IsValidTunnel(lines[i], g.Rooms) {
+		if allRoomsFinded && utils.IsValidTunnel(lines[i]) && utils.ContainsRoom(lines[i], g.Rooms) {
 			tunnel := strings.Split(lines[i], "-")
 			g.Tunneles[tunnel[0]] = append(g.Tunneles[tunnel[0]], tunnel[1])
 			g.Tunneles[tunnel[1]] = append(g.Tunneles[tunnel[1]], tunnel[0])
