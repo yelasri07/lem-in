@@ -74,3 +74,7 @@ func (g *GraphData) ValidateFileContent(lines []string) string {
 
 	return ""
 }
+
+func (g *GraphData) FindPaths() {
+	
+}
