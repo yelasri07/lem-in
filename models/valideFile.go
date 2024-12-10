@@ -71,7 +71,6 @@ func (g *GraphData) ValidateFileContent(lines []string) string {
 			g.Tunneles[tunnel[1]] = append(g.Tunneles[tunnel[1]], tunnel[0])
 		}
 	}
-
 	return ""
 }
 

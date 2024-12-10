@@ -6,17 +6,6 @@ import (
 )
 
 // Check for duplicates inside the file
-func CheckDuplicates(lines []string) bool {
-	for i := 0; i < len(lines); i++ {
-		for j := i + 1; j < len(lines); j++ {
-			if lines[i] == lines[j] {
-				return false
-			}
-		}
-	}
-
-	return true
-}
 
 // Check if the room is valid or not
 func IsValidRomm(str string) bool {
