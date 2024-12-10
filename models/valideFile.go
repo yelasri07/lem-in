@@ -2,10 +2,11 @@ package models
 
 import (
 	"bufio"
-	"lemin/utils"
 	"os"
 	"strconv"
 	"strings"
+
+	"lemin/utils"
 )
 
 type GraphData struct {
