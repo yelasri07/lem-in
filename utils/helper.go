@@ -5,8 +5,6 @@ import (
 	"strings"
 )
 
-// Check for duplicates inside the file
-
 // Check if the room is valid or not
 func IsValidRomm(str string) bool {
 	room := strings.Fields(str)

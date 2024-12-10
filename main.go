@@ -1,10 +1,8 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"os"
-	"strings"
 
 	"lemin/models"
 )
@@ -17,27 +15,9 @@ func main() {
 	}
 	defer file.Close()
 
-	lines := []string{}
-
-	scanner := bufio.NewScanner(file)
-
-	for scanner.Scan() {
-		line := strings.TrimSpace(scanner.Text())
-		if line == "" || (line[0] == '#' && line != "##start" && line != "##end") {
-			continue
-		}
-		lines = append(lines, line)
-
-	}
-
-	if len(lines) < 6 {
-		fmt.Println("error len lines")
-		return
-	}
-
 	infos := models.NewGraphData()
 
-	msg := infos.ValidateFileContent(lines)
+	msg := infos.ValidateFileContent(file)
 	if msg != "" {
 		fmt.Println(msg)
 		return
@@ -46,6 +26,6 @@ func main() {
 	fmt.Println("Number of ants ==>", infos.NbOfants)
 	fmt.Println("Start ==>", infos.Start)
 	fmt.Println("End ==>", infos.End)
-	fmt.Println(infos.Rooms)
-	fmt.Println("tunnels==>", infos.Tunneles)
+	fmt.Println("Rooms", infos.Rooms)
+	fmt.Println("Tunnels==>", infos.Tunneles)
 }

@@ -1,6 +1,8 @@
 package models
 
 import (
+	"bufio"
+	"os"
 	"strconv"
 	"strings"
 
@@ -24,56 +26,74 @@ func NewGraphData() *GraphData {
 }
 
 // ValidateFileContent is a method that validates the content inside the file
-func (g *GraphData) ValidateFileContent(lines []string) string {
+func (g *GraphData) ValidateFileContent(file *os.File) string {
 	var err error
-	g.NbOfants, err = strconv.Atoi(lines[0])
-	if err != nil {
-		return "invalid number of ants"
-	}
 
-	if g.NbOfants <= 0 {
-		return "Number of ants is negative"
-	}
-	allRoomsFinded := false
-	for i := 1; i < len(lines); i++ {
-		if lines[len(lines)-1] == "##start" || lines[len(lines)-1] == "##end" {
-			return "there is no start or end"
+	scanner := bufio.NewScanner(file)
+
+	var count int
+	for scanner.Scan() {
+		line := strings.TrimSpace(scanner.Text())
+		if count == 0 {
+			g.NbOfants, err = strconv.Atoi(line)
+			if err != nil {
+				return "invalid number of ants"
+			}
+
+			if g.NbOfants <= 0 {
+				return "invalid number of ants"
+			}
+			count = 1
 		}
 
-		if lines[i] == "##start" || lines[i] == "##end" {
-			if !utils.IsValidRomm(lines[i+1]) {
-				return "error room start or end"
+		if line == "" || (line[0] == '#' && line != "##start" && line != "##end") {
+			continue
+		}
+
+		room := strings.Fields(line)
+		if count == 2 || count == 3 {
+			if !utils.IsValidRomm(line) {
+				return "Invalid start or end"
 			}
-			room := strings.Fields(lines[i+1])[0]
-			if lines[i] == "##start" {
-				g.Start = room
+			if count == 2 {
+				g.Start = room[0]
 			} else {
-				g.End = room
+				g.End = room[0]
 			}
-		}
-		if utils.IsValidTunnel(lines[i]) && !allRoomsFinded {
-			allRoomsFinded = true
-		}
-		if allRoomsFinded && !utils.IsValidTunnel(lines[i]) && !utils.ContainsRoom(lines[i], g.Rooms) {
-			return "error format of file or tunnels data."
+			count = 1
 		}
 
-		room := strings.Fields(lines[i])
-		if utils.IsValidRomm(lines[i]) {
-			if _, ok := g.Rooms[room[0]]; ok {
-				return "error duplicate room name"
+		if line == "##start" {
+			if g.Start != "" {
+				return "Invalid start"
 			}
-			g.Rooms[room[0]] = room[1:]
+			count = 2
+			continue
 		}
-		if allRoomsFinded && utils.IsValidTunnel(lines[i]) && utils.ContainsRoom(lines[i], g.Rooms) {
-			tunnel := strings.Split(lines[i], "-")
+
+		if line == "##end" {
+			if g.End != "" {
+				return "Invalid End"
+			}
+			count = 3
+			continue
+		}
+
+		if utils.IsValidRomm(line) {
+			g.Rooms[room[0]] = room[1:]
+			continue
+		}
+
+		if utils.IsValidTunnel(line) {
+			tunnel := strings.Split(line, "-")
 			g.Tunneles[tunnel[0]] = append(g.Tunneles[tunnel[0]], tunnel[1])
 			g.Tunneles[tunnel[1]] = append(g.Tunneles[tunnel[1]], tunnel[0])
 		}
+
+	}
+
+	if g.Start == "" || g.End == "" || g.Start == g.End {
+		return "Error start or end"
 	}
 	return ""
-}
-
-func (g *GraphData) FindPaths() {
-	
 }
