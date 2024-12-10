@@ -7,11 +7,10 @@ import (
 	"strings"
 
 	"lemin/models"
-	"lemin/utils"
 )
 
 func main() {
-	file, err := os.Open("sample.txt")
+	file, err := os.Open("message.txt")
 	if err != nil {
 		fmt.Println("File error")
 		return
@@ -28,12 +27,7 @@ func main() {
 			continue
 		}
 		lines = append(lines, line)
-	}
 
-
-	if !utils.CheckDuplicates(lines) {
-		fmt.Println("error data duplicates")
-		return
 	}
 
 	if len(lines) < 6 {
@@ -53,5 +47,5 @@ func main() {
 	fmt.Println("Start ==>", infos.Start)
 	fmt.Println("End ==>", infos.End)
 	fmt.Println(infos.Rooms)
-	fmt.Println("tunnels==>",infos.Tunneles)
+	fmt.Println("tunnels==>", infos.Tunneles)
 }
