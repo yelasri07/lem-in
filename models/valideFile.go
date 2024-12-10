@@ -95,5 +95,8 @@ func (g *GraphData) ValidateFileContent(file *os.File) string {
 	if g.Start == "" || g.End == "" || g.Start == g.End {
 		return "Error start or end"
 	}
+
+	g.CheckLinks()
+
 	return ""
 }
