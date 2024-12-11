@@ -15,6 +15,7 @@ type GraphData struct {
 	End      string
 	Rooms    map[string][]string
 	Tunneles map[string][]string
+	Path [][]string
 }
 
 // Create an instance from the struct GraphData

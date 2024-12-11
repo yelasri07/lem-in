@@ -14,4 +14,6 @@ func (g *GraphData) CheckLinks() {
 	if !contain {
 		log.Fatal("The room given in the tunnels doesn't appear on the rooms map.")
 	}
+
+	g.DFS()
 }
