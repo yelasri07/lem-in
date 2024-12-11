@@ -34,9 +34,8 @@ func main() {
 	for _, room := range infos.Rooms {
 		fmt.Printf("room: %v has neighbors: ", room.Key)
 		for _, neighbor := range room.Neighbors {
-			fmt.Printf("%v ", neighbor.Key) 
+			fmt.Printf("%v ", neighbor.Key)
 		}
-		fmt.Println("") 
+		fmt.Println("")
 	}
-	
 }
