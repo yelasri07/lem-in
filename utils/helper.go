@@ -6,7 +6,7 @@ import (
 )
 
 // Check if the room is valid or not
-func IsValidRomm(str string) bool {
+func IsValidRoom(str string) bool {
 	room := strings.Fields(str)
 	if len(room) != 3 {
 		return false

@@ -28,9 +28,14 @@ func main() {
 		return
 	}
 
-	fmt.Println("Number of ants ==>", infos.NbOfants)
+	fmt.Println("Number of ants ==>", infos.NbOfAnts)
 	fmt.Println("Start ==>", infos.Start)
 	fmt.Println("End ==>", infos.End)
-	fmt.Println("Rooms ==>", infos.Rooms)
-	fmt.Println("Tunnels ==>", infos.Tunneles)
+	for _, room := range infos.Rooms {
+		fmt.Printf("room: %v has neighbors: ", room.Key)
+		for _, neighbor := range room.Neighbors {
+			fmt.Printf("%v ", neighbor.Key)
+		}
+		fmt.Println("")
+	}
 }
