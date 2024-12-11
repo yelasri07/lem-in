@@ -31,6 +31,6 @@ func main() {
 	fmt.Println("Number of ants ==>", infos.NbOfants)
 	fmt.Println("Start ==>", infos.Start)
 	fmt.Println("End ==>", infos.End)
-	fmt.Println("Rooms", infos.Rooms)
-	fmt.Println("Tunnels==>", infos.Tunneles)
+	fmt.Println("Rooms ==>", infos.Rooms)
+	fmt.Println("Tunnels ==>", infos.Tunneles)
 }
