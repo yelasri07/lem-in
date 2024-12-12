@@ -102,6 +102,8 @@ func (g *GraphData) ValidateFileContent(file *os.File) string {
 		return "Error start or end"
 	}
 
+	g.DFS()
+
 	return ""
 }
 
