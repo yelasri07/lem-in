@@ -15,6 +15,7 @@ type GraphData struct {
 	Start    string
 	End      string
 	Rooms    []*Room
+	Paths [][]string
 }
 
 type Room struct {

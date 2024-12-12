@@ -2,7 +2,6 @@ package services
 
 import (
 	"fmt"
-	"strings"
 )
 
 func (g *GraphData) DFS() {
@@ -18,17 +17,24 @@ func (g *GraphData) DFS() {
 	// Perform DFS
 	var currentPath []string
 	g.dfsHelper(startRoom, visited, currentPath)
+
+	// fmt.Println(g.Paths)
 }
 
 // Recursive DFS helper function
 func (g *GraphData) dfsHelper(room *Room, visited map[string]bool, currentPath []string) {
 	// Mark the current room as visited
+
 	visited[room.Key] = true
 	currentPath = append(currentPath, room.Key) // Add current room to path
 
 	// Check if this is the end room
+
 	if room.Key == g.End {
-		fmt.Println("Path found:", strings.Join(currentPath, " -> "))
+		fmt.Println(currentPath)
+		g.Paths = append(g.Paths, currentPath)
+		fmt.Println(g.Paths)
+
 	}
 
 	// Visit all unvisited neighborss
@@ -39,7 +45,11 @@ func (g *GraphData) dfsHelper(room *Room, visited map[string]bool, currentPath [
 	}
 
 	// Backtrack: unmark it as visited
-	visited[room.Key] = false
+	if room.Key == g.End {
+		visited[room.Key] = true
+	} else {
+		visited[room.Key] = false
+	}
 }
 
 // Helper function to find a room by its key
