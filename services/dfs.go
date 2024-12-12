@@ -38,7 +38,7 @@ func (g *GraphData) dfsHelper(room *Room, visited map[string]bool, currentPath [
 		}
 	}
 
-	// Backtrack: Remove the current room from the path and unmark it as visited
+	// Backtrack: unmark it as visited
 	visited[room.Key] = false
 }
 
