@@ -1,4 +1,4 @@
-package models
+package services
 
 import (
 	"bufio"
@@ -132,6 +132,7 @@ func (g *GraphData) AddNeighbor(from string, to string) {
 		log.Fatal("You cannot add a neighbor that already exists")
 	}
 	fromVertex.Neighbors = append(fromVertex.Neighbors, toVertex)
+	toVertex.Neighbors = append(toVertex.Neighbors, fromVertex)
 }
 
 func (g *GraphData) GetRoom(key string) *Room {

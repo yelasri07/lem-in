@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"lemin/models"
+	"lemin/services"
 )
 
 func main() {
@@ -20,7 +20,7 @@ func main() {
 	}
 	defer file.Close()
 
-	infos := models.NewGraphData()
+	infos := services.NewGraphData()
 
 	msg := infos.ValidateFileContent(file)
 	if msg != "" {
