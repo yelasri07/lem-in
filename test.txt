@@ -1,0 +1,32 @@
+package services
+
+import "fmt"
+
+func (g *GraphData) Bfs() {
+	start := g.Start
+	visited := map[string]bool{
+		start: true,
+	}
+	queue := [][]string{{start}}
+	for len(queue) > 0 {
+		path := queue[0]
+		queue = queue[1:]
+		lasthRoom := path[len(path)-1]
+		g.GetNeighbors(lasthRoom, &queue, visited)
+		fmt.Println(queue)
+	}
+}
+
+func (g *GraphData) GetNeighbors(s string, q *[][]string, v map[string]bool) {
+	for _, r := range g.Rooms {
+		if r.Key == s {
+			for _, nei := range r.Neighbors {
+				if !v[nei.Key] {
+					v[nei.Key] = true
+					*q = append(*q, []string{s, nei.Key})
+				}
+			}
+			fmt.Println()
+		}
+	}
+}
