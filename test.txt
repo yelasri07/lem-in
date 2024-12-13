@@ -1,32 +1,25 @@
-package services
-
-import "fmt"
-
-func (g *GraphData) Bfs() {
-	start := g.Start
-	visited := map[string]bool{
-		start: true,
-	}
-	queue := [][]string{{start}}
-	for len(queue) > 0 {
-		path := queue[0]
-		queue = queue[1:]
-		lasthRoom := path[len(path)-1]
-		g.GetNeighbors(lasthRoom, &queue, visited)
-		fmt.Println(queue)
-	}
-}
-
-func (g *GraphData) GetNeighbors(s string, q *[][]string, v map[string]bool) {
-	for _, r := range g.Rooms {
-		if r.Key == s {
-			for _, nei := range r.Neighbors {
-				if !v[nei.Key] {
-					v[nei.Key] = true
-					*q = append(*q, []string{s, nei.Key})
-				}
-			}
-			fmt.Println()
-		}
-	}
-}
+55
+##start
+1 23 3
+2 16 7
+#comment
+3 16 3
+4 16 5
+5 9 3
+6 1 5
+7 4 8
+##end
+0 9 5
+0-4
+0-6
+1-3
+4-3
+5-2
+3-5
+#another comment
+4-2
+2-1
+7-6
+7-2
+7-4
+6-5
