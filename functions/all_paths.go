@@ -1,9 +1,8 @@
 package functions
 
+import "fmt"
+
 func (a *Info) Bfs(n string) {
-	if a.Neiofstart == nil {
-		a.Neiofstart = make(map[string]bool)
-	}
 
 	var queue [][]string
 
@@ -18,29 +17,38 @@ func (a *Info) Bfs(n string) {
 		lastroom := path[len(path)-1]
 
 		if lastroom == a.End {
-			newpath := append([]string{}, path...)
-			a.UniquePaths = append(a.UniquePaths, newpath)
-			//a.FindTheBestPaths()
-			break
+
+			if a.FindTheBestPaths() {
+				newpath := append([]string{}, path...)
+				a.UniquePaths = append(a.UniquePaths, newpath)
+				break
+			}
+			
 		}
 
 		for _, nei := range a.Tunnels[lastroom] {
-			if !isvesited(path, nei) && nei != a.Start && ok(a.Res , nei){
+			if !isvesited(path, nei) && nei != a.Start && ok(a.Res, nei) {
 				newpath := append([]string{}, path...)
 				newpath = append(newpath, nei)
 				queue = append(queue, newpath)
 			}
 		}
 	}
-	
 }
 
-func (y * Info) FindTheBestPaths() {
+func (y *Info) FindTheBestPaths() bool {
 	/// I will use this method to find the best paths to move the ants in it ....
+	/// I will check the number of ants and rooms and decide whether to take the shortest or longest paths .....
+	//
+	// "I have the number of rooms and the number of ants. I will create a condition between them to choose the best paths ....
+	fmt.Println(y.NumberOfAnts)
+	fmt.Println(y.NumberOfRomms)
+
+	// If the number of ants is fewer than the number of rooms, I will take the shorts paths. Otherwise, I will take the longest paths .....
+	return true
 }
 
-
-func ok(n []string, a string ) bool {
+func ok(n []string, a string) bool {
 	for _, char := range n {
 		if char == a {
 			return false
@@ -57,4 +65,3 @@ func isvesited(path []string, room string) bool {
 	}
 	return false
 }
-

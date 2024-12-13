@@ -29,13 +29,13 @@ func main() {
 		info.Bfs(v)
 	}
 
-	fmt.Println(info.NumberOfAnts)
-	fmt.Println(info.Start)
-	fmt.Println(info.End)
-	fmt.Println(info.Rooms)
-	fmt.Println(info.Tunnels)
+	// fmt.Println(info.NumberOfAnts)
+	// fmt.Println(info.Start)
+	// fmt.Println(info.End)
+	// fmt.Println(info.Rooms)
+	// fmt.Println(info.Tunnels)
 
-	for _, p := range info.UniquePaths {
-		fmt.Println(p)
-	}
+	// for _, p := range info.UniquePaths {
+	// 	fmt.Println(p)
+	// }
 }
