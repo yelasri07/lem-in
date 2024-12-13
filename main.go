@@ -4,38 +4,35 @@ import (
 	"fmt"
 	"os"
 
-	"lemin/services"
+	"lemin/functions"
 )
 
 func main() {
 	if len(os.Args) != 2 {
-		fmt.Println("Enter file name")
 		return
 	}
 
-	file, err := os.Open(os.Args[1])
+	info := functions.Info{}
+
+	err := info.ReadFile(os.Args[1])
 	if err != nil {
-		fmt.Println("File error")
+		fmt.Println(err)
 		return
 	}
-	defer file.Close()
-
-	infos := services.NewGraphData()
-
-	msg := infos.ValidateFileContent(file)
-	if msg != "" {
-		fmt.Println(msg)
-		return
+	
+	
+	
+	info.Res = append(info.Res, info.Tunnels[info.Start]...)
+	
+	
+	for _, v := range info.Tunnels[info.Start] {
+		info.Bfs(v)
 	}
 
-	// fmt.Println("Number of ants ==>", infos.NbOfAnts)
-	// fmt.Println("Start ==>", infos.Start)
-	// fmt.Println("End ==>", infos.End)
-	// for _, room := range infos.Rooms {
-	// 	fmt.Printf("room: %v has neighbors: ", room.Key)
-	// 	for _, neighbor := range room.Neighbors {
-	// 		fmt.Printf("%v ", neighbor.Key)
-	// 	}
-	// 	fmt.Println("")
-	// }
+	fmt.Println(info.NumberOfAnts)
+	fmt.Println(info.Start)
+	fmt.Println(info.End)
+	fmt.Println(info.Rooms)
+	fmt.Println(info.Tunnels)
+	fmt.Println(info.UniquePaths)
 }

@@ -1,0 +1,6 @@
+[start G0 G1 G2 G3 G4 D3 end]
+[start A0 A1 A2 end]
+[start B0 B1 A1 A2 end]
+[start C0 C1 C2 C3 A2 end]
+[start C0 C1 C2 C3 I4 I5 end]
+[start B0 B1 E2 D2 D3 end]
