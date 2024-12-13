@@ -20,7 +20,8 @@ func (a *Info) Bfs(n string) {
 		if lastroom == a.End {
 			newpath := append([]string{}, path...)
 			a.UniquePaths = append(a.UniquePaths, newpath)
-			continue
+			//a.FindTheBestPaths()
+			break
 		}
 
 		for _, nei := range a.Tunnels[lastroom] {
@@ -32,6 +33,10 @@ func (a *Info) Bfs(n string) {
 		}
 	}
 	
+}
+
+func (y * Info) FindTheBestPaths() {
+	/// I will use this method to find the best paths to move the ants in it ....
 }
 
 

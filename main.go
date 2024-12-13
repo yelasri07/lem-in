@@ -34,5 +34,8 @@ func main() {
 	fmt.Println(info.End)
 	fmt.Println(info.Rooms)
 	fmt.Println(info.Tunnels)
-	fmt.Println(info.UniquePaths)
+
+	for _, p := range info.UniquePaths {
+		fmt.Println(p)
+	}
 }
