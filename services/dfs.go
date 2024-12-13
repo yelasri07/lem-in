@@ -2,62 +2,69 @@ package services
 
 import (
 	"fmt"
+	"strings"
+	"sync"
 )
 
 func (g *GraphData) DFS() {
-	visited := make(map[string]bool) // Map to track visited rooms
-
-	// Find the start room
-	startRoom := g.getRoomByKey(g.Start)
-	if startRoom == nil {
-		fmt.Println("Start room not found.")
-		return
+	var startRoom *Room
+	for _, room := range g.Rooms {
+		if room.Key == g.Start {
+			startRoom = room
+		}
 	}
 
-	// Perform DFS
-	var currentPath []string
-	g.dfsHelper(startRoom, visited, currentPath)
+	for _, a := range startRoom.Neighbors {
+		g.Neiofstart = append(g.Neiofstart, a)
+	}
 
-	// fmt.Println(g.Paths)
+	var wg sync.WaitGroup
+
+	for _, nei := range startRoom.Neighbors {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			visited := make(map[string]bool)
+		var currentPath []string
+		g.DFSHelper(nei, visited, currentPath)
+		}()
+		
+	}
+
+	wg.Wait()
+	
+
+	for _, path := range g.Paths {
+		fmt.Println(strings.Join(path, " -> "))
+	}
 }
 
 // Recursive DFS helper function
-func (g *GraphData) dfsHelper(room *Room, visited map[string]bool, currentPath []string) {
-	// Mark the current room as visited
-
+func (g *GraphData) DFSHelper(room *Room, visited map[string]bool, currentPath []string) {
 	visited[room.Key] = true
-	currentPath = append(currentPath, room.Key) // Add current room to path
-
-	// Check if this is the end room
+	currentPath = append(currentPath, room.Key)
 
 	if room.Key == g.End {
-		fmt.Println(currentPath)
-		g.Paths = append(g.Paths, currentPath)
-		fmt.Println(g.Paths)
-
+		newPath := make([]string, len(currentPath))
+		copy(newPath, currentPath)
+		g.Paths = append(g.Paths, newPath)
 	}
 
-	// Visit all unvisited neighborss
-	for _, neighbor := range room.Neighbors {
-		if !visited[neighbor.Key] {
-			g.dfsHelper(neighbor, visited, currentPath)
+	for _, neighbors := range room.Neighbors {
+		if !visited[neighbors.Key] && neighbors.Key != g.Start && isayn(g.Neiofstart, neighbors) {
+			g.DFSHelper(neighbors, visited, currentPath)
 		}
 	}
 
-	// Backtrack: unmark it as visited
-	if room.Key == g.End {
-		visited[room.Key] = true
-	} else {
-		visited[room.Key] = false
-	}
+	visited[room.Key] = false
 }
 
-// Helper function to find a room by its key
-func (g *GraphData) getRoomByKey(key string) *Room {
-	for _, room := range g.Rooms {
-		if room.Key == key {
-			return room
+func isayn(a []*Room, b *Room) bool {
+	for _, nei := range a {
+		if b == nei {
+			return false
 		}
 	}
-	return nil
+
+	return true
 }

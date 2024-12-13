@@ -11,11 +11,12 @@ import (
 )
 
 type GraphData struct {
-	NbOfAnts int
-	Start    string
-	End      string
-	Rooms    []*Room
-	Paths [][]string
+	NbOfAnts   int
+	Start      string
+	End        string
+	Rooms      []*Room
+	Paths      [][]string
+	Neiofstart []*Room
 }
 
 type Room struct {
