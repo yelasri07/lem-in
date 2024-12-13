@@ -11,10 +11,12 @@ import (
 )
 
 type GraphData struct {
-	NbOfAnts int
-	Start    string
-	End      string
-	Rooms    []*Room
+	NbOfAnts   int
+	Start      string
+	End        string
+	Rooms      []*Room
+	Paths      [][]string
+	Neiofstart []*Room
 }
 
 type Room struct {
@@ -101,6 +103,8 @@ func (g *GraphData) ValidateFileContent(file *os.File) string {
 	if g.Start == "" || g.End == "" || g.Start == g.End {
 		return "Error start or end"
 	}
+
+	g.DFS()
 
 	return ""
 }
