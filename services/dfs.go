@@ -14,9 +14,7 @@ func (g *GraphData) DFS() {
 		}
 	}
 
-	for _, a := range startRoom.Neighbors {
-		g.Neiofstart = append(g.Neiofstart, a)
-	}
+	g.Neiofstart = startRoom.Neighbors
 
 	var wg sync.WaitGroup
 
