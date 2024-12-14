@@ -27,21 +27,15 @@ func (g *GraphData) BFS() {
 			if room.Key == string(currentPath[len(currentPath)-1]) {
 				for _, neighbor := range room.Neighbors {
 					if !slices.Contains(currentPath, neighbor.Key) {
-						newPath := append([]string{},currentPath...)
+						newPath := append([]string{}, currentPath...)
 						newPath = append(newPath, neighbor.Key)
 						queue = append(queue, newPath)
 					}
-				
 				}
-				
+
 				break
 			}
-			
 		}
-
-		fmt.Println(queue)
-
-		// queue = [][]string{}
 
 	}
 
