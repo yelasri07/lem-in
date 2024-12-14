@@ -1,68 +1,67 @@
 package services
 
-import (
-	"fmt"
-	"strings"
-	"sync"
-)
+// import (
+// 	"fmt"
+// 	"strings"
+// 	"sync"
+// )
 
-func (g *GraphData) DFS() {
-	var startRoom *Room
-	for _, room := range g.Rooms {
-		if room.Key == g.Start {
-			startRoom = room
-		}
-	}
+// func (g *GraphData) DFS() {
+// 	var startRoom *Room
+// 	for _, room := range g.Rooms {
+// 		if room.Key == g.Start {
+// 			startRoom = room
+// 		}
+// 	}
 
-	g.Neiofstart = startRoom.Neighbors
+// 	g.Neiofstart = startRoom.Neighbors
 
-	var wg sync.WaitGroup
+// 	var wg sync.WaitGroup
 
-	for _, nei := range startRoom.Neighbors {
-		wg.Add(1)
-		go func() {
-			defer wg.Done()
-			visited := make(map[string]bool)
-		var currentPath []string
-		g.DFSHelper(nei, visited, currentPath)
-		}()
-		
-	}
+// 	for _, nei := range startRoom.Neighbors {
+// 		wg.Add(1)
+// 		go func() {
+// 			defer wg.Done()
+// 			visited := make(map[string]bool)
+// 			var currentPath []string
+// 			g.DFSHelper(nei, visited, currentPath)
+// 		}()
 
-	wg.Wait()
-	
+// 	}
 
-	for _, path := range g.Paths {
-		fmt.Println(strings.Join(path, " -> "))
-	}
-}
+// 	wg.Wait()
 
-// Recursive DFS helper function
-func (g *GraphData) DFSHelper(room *Room, visited map[string]bool, currentPath []string) {
-	visited[room.Key] = true
-	currentPath = append(currentPath, room.Key)
+// 	for _, path := range g.Paths {
+// 		fmt.Println("0 ->", strings.Join(path, " -> "))
+// 	}
+// }
 
-	if room.Key == g.End {
-		newPath := make([]string, len(currentPath))
-		copy(newPath, currentPath)
-		g.Paths = append(g.Paths, newPath)
-	}
+// // Recursive DFS helper function
+// func (g *GraphData) DFSHelper(room *Room, visited map[string]bool, currentPath []string) {
+// 	visited[room.Key] = true
+// 	currentPath = append(currentPath, room.Key)
 
-	for _, neighbors := range room.Neighbors {
-		if !visited[neighbors.Key] && neighbors.Key != g.Start && isayn(g.Neiofstart, neighbors) {
-			g.DFSHelper(neighbors, visited, currentPath)
-		}
-	}
+// 	if room.Key == g.End {
+// 		newPath := make([]string, len(currentPath))
+// 		copy(newPath, currentPath)
+// 		g.Paths = append(g.Paths, newPath)
+// 	}
 
-	visited[room.Key] = false
-}
+// 	for _, neighbors := range room.Neighbors {
+// 		if !visited[neighbors.Key] && neighbors.Key != g.Start && !isNeighborStart(g.Neiofstart, neighbors) {
+// 			g.DFSHelper(neighbors, visited, currentPath)
+// 		}
+// 	}
 
-func isayn(a []*Room, b *Room) bool {
-	for _, nei := range a {
-		if b == nei {
-			return false
-		}
-	}
+// 	visited[room.Key] = false
+// }
 
-	return true
-}
+// func isNeighborStart(a []*Room, b *Room) bool {
+// 	for _, nei := range a {
+// 		if b == nei {
+// 			return true
+// 		}
+// 	}
+
+// 	return false
+// }
