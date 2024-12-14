@@ -1,5 +1,7 @@
 package functions
 
+import "fmt"
+
 func (a *Info) Bfs(n string) {
 	if a.Neiofstart == nil {
 		a.Neiofstart = make(map[string]bool)
@@ -9,7 +11,6 @@ func (a *Info) Bfs(n string) {
 
 	queue = append(queue, []string{n})
 
-	
 	for len(queue) > 0 {
 
 		path := queue[0]
@@ -19,11 +20,12 @@ func (a *Info) Bfs(n string) {
 		lastroom := path[len(path)-1]
 
 		if lastroom == a.End {
-			if a.FindTheBestPaths() {
-				newpath := append([]string{}, path...)
-				a.UniquePaths = append(a.UniquePaths, newpath)
-				break
-			}
+
+			newpath := append([]string{}, path...)
+			a.UniquePaths = append(a.UniquePaths, newpath)
+			a.FindTheBestPaths()
+			break
+
 		}
 
 		for _, nei := range a.Tunnels[lastroom] {
@@ -36,11 +38,10 @@ func (a *Info) Bfs(n string) {
 	}
 }
 
-func (y *Info) FindTheBestPaths() bool {
+func (y *Info) FindTheBestPaths() {
 	/// I will use this method to find the best paths to move the ants in it ....
-
-	// nm ants . nm rooms
-	return false
+	fmt.Println(y.NumberOfrooms)
+	// nm ants . nm rooms 
 }
 
 func ok(n []string, a string) bool {

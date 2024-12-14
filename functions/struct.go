@@ -13,4 +13,12 @@ type Info struct {
 	Neiofstart map[string]bool
 	NumberOfrooms int
  	Res []string
-} 	
+}
+
+type Paths struct {
+	P []string
+}
+
+type K struct {
+	K []*Paths
+}
