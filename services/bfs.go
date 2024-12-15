@@ -1,34 +1,48 @@
 package services
 
-import "fmt"
+import "slices"
 
-func (g *GraphData) Bfs() {
-	start := g.Start
-	visited := map[string]bool{
-		start: true,
-	}
-	queue := [][]string{{start}}
+func (g *GraphData) BFS(r string, v *map[string]bool) {
+	g.BFSHelper(r, v)
+}
+
+func (g *GraphData) BFSHelper(room string, visited *map[string]bool) {
+	var queue [][]string
+	var currentPath []string
+	(*visited)[g.Start] = true
+	(*visited)[room] = true
+
+	queue = append(queue, []string{g.Start, room})
 	for len(queue) > 0 {
-		path := queue[0]
+
+		currentPath = queue[0]
+
 		queue = queue[1:]
 
-		g.GetNeighbors(path, &queue, visited)
-		fmt.Println(queue)
+		if string(currentPath[len(currentPath)-1]) == g.End {
+			g.Paths = append(g.Paths, currentPath)
+			UnlockRooms(currentPath, queue, *visited)
+			break
+		}
+
+		for _, neighbor := range g.Tunnels[currentPath[len(currentPath)-1]] {
+			if !(*visited)[neighbor] {
+				newPath := append([]string{}, currentPath...)
+				newPath = append(newPath, neighbor)
+				queue = append(queue, newPath)
+				if neighbor != g.End {
+					(*visited)[neighbor] = true
+				}
+			}
+		}
 	}
 }
 
-func (g *GraphData) GetNeighbors(path []string, q *[][]string, v map[string]bool) {
-	s := path[len(path)-1]
-	for _, r := range g.Rooms {
-		if r.Key == s {
-			for _, nei := range r.Neighbors {
-				if !v[nei.Key] {
-					newpath := []string{}
-					v[nei.Key] = true
-					newpath = path
-					newpath = append(newpath, nei.Key)
-					*q = append(*q, newpath)
-				}
+func UnlockRooms(path []string, inVistedRoom [][]string, visited map[string]bool) {
+	for _, p := range inVistedRoom {
+		for _, r := range p[2:] {
+			if !slices.Contains(path, r) {
+				visited[r] = false
 			}
 		}
 	}

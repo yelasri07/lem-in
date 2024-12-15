@@ -2,6 +2,7 @@ package services
 
 import (
 	"bufio"
+	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -11,24 +12,20 @@ import (
 )
 
 type GraphData struct {
-	NbOfAnts   int
-	Start      string
-	End        string
-	Rooms      []*Room
-	Paths      [][]string
-	Neiofstart []*Room
-}
-
-type Room struct {
-	Key       string
-	X         string
-	Y         string
-	Neighbors []*Room
+	NbOfAnts int
+	Start    string
+	End      string
+	Rooms    map[string][]string
+	Tunnels  map[string][]string
+	Paths    [][]string
 }
 
 // Create an instance from the struct GraphData
 func NewGraphData() *GraphData {
-	return &GraphData{}
+	return &GraphData{
+		Rooms:   make(map[string][]string),
+		Tunnels: make(map[string][]string),
+	}
 }
 
 // ValidateFileContent is a method that validates the content inside the file
@@ -36,10 +33,10 @@ func (g *GraphData) ValidateFileContent(file *os.File) string {
 	var err error
 
 	scanner := bufio.NewScanner(file)
-	ln := 0
+	lineError := 0
 	var count int
 	for scanner.Scan() {
-		ln++
+		lineError++
 		line := strings.TrimSpace(scanner.Text())
 		if count == 0 {
 			g.NbOfAnts, err = strconv.Atoi(line)
@@ -87,15 +84,14 @@ func (g *GraphData) ValidateFileContent(file *os.File) string {
 			continue
 		}
 		if !utils.IsValidRoom(line) && !utils.IsValidTunnel(line) {
-			return "Invalid format of room, tunnel, or coordinates in line " + strconv.Itoa(ln)
+			return "Invalid format of room, tunnel, or coordinates in line " + strconv.Itoa(lineError)
 		}
 		if utils.IsValidRoom(line) {
 			g.AddRoom(line)
 			continue
 		}
 		if utils.IsValidTunnel(line) {
-			tunnel := strings.Split(line, "-")
-			g.AddNeighbor(tunnel[0], tunnel[1])
+			g.AddNeighbor(line)
 		}
 
 	}
@@ -103,47 +99,30 @@ func (g *GraphData) ValidateFileContent(file *os.File) string {
 	if g.Start == "" || g.End == "" || g.Start == g.End {
 		return "Error start or end"
 	}
+	visited := make(map[string]bool)
+	for i := 0; i < len(g.Tunnels[g.Start]) ; i++ {
+		g.BFS(g.Tunnels[g.Start][i], &visited)
+	}
+	fmt.Println(g.Paths)
+	g.Sendants(g.Paths)
 
-	// g.DFS()
-	g.Bfs()
 	return ""
 }
 
 func (g *GraphData) AddRoom(line string) {
 	room := strings.Fields(line)
-	if contains(g.Rooms, room[0]) {
+	if _, exist := g.Rooms[room[0]]; exist {
 		log.Fatal("Room already exists, you cannot duplicate rooms")
 	}
-	g.Rooms = append(g.Rooms, &Room{Key: room[0], X: room[1], Y: room[2]})
+	g.Rooms[room[0]] = append(g.Rooms[room[0]], room[1], room[2])
 }
 
-func contains(rooms []*Room, key string) bool {
-	for _, r := range rooms {
-		if r.Key == key {
-			return true
-		}
-	}
-	return false
-}
-
-func (g *GraphData) AddNeighbor(from string, to string) {
-	fromVertex := g.GetRoom(from)
-	toVertex := g.GetRoom(to)
-	if fromVertex == nil || toVertex == nil {
+func (g *GraphData) AddNeighbor(line string) {
+	if !utils.ContainsRoom(line, g.Rooms) {
 		log.Fatal("You might be trying to add a non-existent room")
 	}
-	if contains(fromVertex.Neighbors, to) {
-		log.Fatal("You cannot add a neighbor that already exists")
-	}
-	fromVertex.Neighbors = append(fromVertex.Neighbors, toVertex)
-	toVertex.Neighbors = append(toVertex.Neighbors, fromVertex)
-}
 
-func (g *GraphData) GetRoom(key string) *Room {
-	for _, room := range g.Rooms {
-		if room.Key == key {
-			return room
-		}
-	}
-	return nil
+	tunnel := strings.Split(line, "-")
+	g.Tunnels[tunnel[0]] = append(g.Tunnels[tunnel[0]], tunnel[1])
+	g.Tunnels[tunnel[1]] = append(g.Tunnels[tunnel[1]], tunnel[0])
 }
