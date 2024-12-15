@@ -3,13 +3,10 @@ package services
 import (
 	"fmt"
 	"slices"
-	"strings"
 )
 
 func (g *GraphData) BFS() {
-
 	g.BFSHelper()
-
 }
 
 func (g *GraphData) BFSHelper() {
@@ -38,8 +35,5 @@ func (g *GraphData) BFSHelper() {
 		}
 
 	}
-
-	for _, path := range g.Paths {
-		fmt.Println(strings.Join(path, " -> "))
-	}
+	fmt.Println(g.Paths)
 }
