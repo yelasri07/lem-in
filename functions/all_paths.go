@@ -20,13 +20,6 @@ func (y *Info) Bfs(n string) {
 			newpath := append([]string{}, path...)
 
 			y.UniquePaths = append(y.UniquePaths, newpath)
-			// if len(y.Res) == len(y.UniquePaths) {
-			// 	S := y.UniquePaths
-			// 	res := y.FindGroups(S)
-			// 	y.UniquePaths = res
-			// 	break
-			// }
-
 			break
 
 		}
@@ -41,36 +34,8 @@ func (y *Info) Bfs(n string) {
 	}
 }
 
-// func (y *Info) Kk() {
-
-// }
-
-// func (y *Info) Gh() {
-// 	uniqueMap := make(map[string][]string)
-
-// 	for _, row := range y.UniquePaths {
-// 		h := row[1:]
-// 		h = h[:len(h)-1]
-// 		sortedRow := append([]string{}, row...)
-// 		sort.Strings(sortedRow)
-
-// 		key := strings.Join(sortedRow, ",")
-
-// 		if existing, exists := uniqueMap[key]; !exists || len(row) < len(existing) {
-// 			uniqueMap[key] = row
-// 		}
-// 	}
-
-// 	result := [][]string{}
-// 	for _, row := range uniqueMap {
-// 		result = append(result, row)
-// 	}
-
-// 	y.UniquePaths = result
-// }
 
 func (y *Info) FindGroups() {
-	
 	status, ig1 , ig2 := FindTheUniquePaths(y.UniquePaths[0], y.UniquePaths[len(y.UniquePaths)-1])
 	if status {
 	} else {
@@ -119,22 +84,11 @@ func (y *Info) BBfs(n string, b string) {
 	}
 }
 
-// func jj(h [][]string, g []string) [][]string {
-// 	var rr [][]string
-// 	for _, p := range h {
-// 		if FindTheUniquePaths(p, g) {
-// 			rr = append(rr, p)
-// 			rr = append(rr, p)
-// 		} else {
-// 			rr = append(rr, p)
-// 		}
-// 	}
-// 	return rr
-// }
+
 
 func FindTheUniquePaths(p1, p2 []string) (bool, int, int) {
-	for i := 0; i < len(p1)-1; i++ {
-		for j := 0; j < len(p2)-1; j++ {
+	for i := 1; i < len(p1)-1; i++ {
+		for j := 1; j < len(p2)-1; j++ {
 			if p1[i] == p2[j] {
 				return false, j , i
 			}
@@ -161,33 +115,23 @@ func isvesited(path []string, room string) bool {
 	return false
 }
 
-// func Bfs(g map[string][]string, End string, Start string, r string) [][]string {
-// 	var res [][]string
-// 	var queue [][]string
+func (y * Info) Jj() {
+	pp := y.UniquePaths[0]
+	y.TheBestpaths = append(y.TheBestpaths, pp)
+	for i := 1; i < len(y.UniquePaths); i++ {
+		if  FindTheUniqueePaths(pp , y.UniquePaths[i]) {
+			y.TheBestpaths = append(y.TheBestpaths, y.UniquePaths[i])
+		}
+	}
+}
 
-// 	queue = append(queue, []string{r})
-
-// 	for len(queue) > 0 {
-
-// 		path := queue[0]
-
-// 		queue = queue[1:]
-
-// 		lastroom := path[len(path)-1]
-
-// 		if lastroom == End {
-
-// 			newpath := append([]string{}, path...)
-// 			res = append(res, newpath)
-// 		}
-
-// 		for _, nei := range g[lastroom] {
-// 			if !isvesited(path, nei) && nei != r && nei != Start {
-// 				newpath := append([]string{}, path...)
-// 				newpath = append(newpath, nei)
-// 				queue = append(queue, newpath)
-// 			}
-// 		}
-// 	}
-// 	return res
-// }
+func FindTheUniqueePaths(p1, p2 []string) bool {
+	for i := 1; i < len(p1)-1; i++ {
+		for j := 1; j < len(p2)-1; j++ {
+			if p1[i] == p2[j] {
+				return false
+			}
+		}
+	}
+	return true
+}
