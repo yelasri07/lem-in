@@ -7,9 +7,7 @@ import (
 )
 
 func (g *GraphData) BFS() {
-
 	g.BFSHelper()
-
 }
 
 func (g *GraphData) BFSHelper() {
@@ -24,12 +22,13 @@ func (g *GraphData) BFSHelper() {
 
 		queue = queue[1:]
 
-		if string(currentPath[len(currentPath)-1]) == g.End {
+		lastRoomCurrent := currentPath[len(currentPath)-1]
+		if lastRoomCurrent == g.End {
 			g.Paths = append(g.Paths, currentPath)
 			continue
 		}
 
-		for _, neighbor := range g.Tunnels[currentPath[len(currentPath)-1]] {
+		for _, neighbor := range g.Tunnels[lastRoomCurrent] {
 			if !slices.Contains(currentPath, neighbor) {
 				newPath := append([]string{}, currentPath...)
 				newPath = append(newPath, neighbor)
