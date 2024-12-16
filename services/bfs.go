@@ -40,6 +40,6 @@ func (g *GraphData) BFSHelper() {
 	}
 
 	for _, path := range g.Paths {
-		fmt.Println(strings.Join(path, " -> "))
+		fmt.Println("Path :" ,strings.Join(path, " -> "))
 	}
 }
