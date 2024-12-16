@@ -27,15 +27,24 @@ func main() {
 	
 	for _, v := range info.Tunnels[info.Start] {
 		info.Bfs(v)
+		if len(info.UniquePaths) >= 2 {
+			info.FindGroups()
+		}
 	}
+	
+	//info.Bfs(info.Start)
 
 	// fmt.Println(info.NumberOfAnts)
 	// fmt.Println(info.Start)
 	// fmt.Println(info.End)
 	// fmt.Println(info.Rooms)
-	// fmt.Println(info.Tunnels)
+	//fmt.Println(info.Tunnels)
 
 	for _, p := range info.UniquePaths {
+		fmt.Println(p)
+	}
+	fmt.Println("<--------------------------->")
+	for _, p := range info.TheBestpaths {
 		fmt.Println(p)
 	}
 }
