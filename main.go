@@ -20,21 +20,27 @@ func main() {
 		return
 	}
 	
-	
+	//info.Bfs(info.Start)
 	
 	info.Res = append(info.Res, info.Tunnels[info.Start]...)
 	
 	
 	for _, v := range info.Tunnels[info.Start] {
 		info.Bfs(v)
-		if len(info.UniquePaths) >= 2 {
+		if len(info.UniquePaths) > 2 {
 			info.FindGroups()
 		}
 	}
+	for _, p := range info.UniquePaths {
+		fmt.Println(p)
+	}
 	info.Jj()
-	
-	info.Ll()
 
+	// info.Ll()
+	// info.Jj()
+	for _, p := range info.UniquePaths {
+		fmt.Println(p)
+	}
 	fmt.Println("<--------------------------->")
 	for _, p := range info.TheBestpaths {
 		fmt.Println(p)
