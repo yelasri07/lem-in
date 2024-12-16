@@ -38,6 +38,11 @@ func (g *GraphData) BFSHelper() {
 
 	}
 
+	g.FindBestPaths()
+
+}
+
+func (g *GraphData) FindBestPaths() {
 	for _, path := range g.Paths {
 		fmt.Println(strings.Join(path, " -> "))
 	}
