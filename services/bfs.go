@@ -33,8 +33,8 @@ func (g *GraphData) BFSHelper() {
 				}
 			}
 			if intersectionPoint {
-				path := Paths{len: len(currentPath), rooms: currentPath}
-				g.Paths = append(g.Paths, &path)
+				path := &Paths{len: len(currentPath), rooms: currentPath}
+				g.Paths = append(g.Paths, path)
 			}
 			continue
 		}
@@ -54,6 +54,6 @@ func (g *GraphData) BFSHelper() {
 
 func (g *GraphData) FindBestPaths() {
 	for _, path := range g.Paths {
-		fmt.Println(strings.Join(path.rooms," -> ") , "|| len =", path.len)
+		fmt.Println(strings.Join(path.rooms," -> ") , "|| len :", path.len)
 	}
 }
