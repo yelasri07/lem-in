@@ -37,6 +37,7 @@ func main() {
 	
 	info.Jj()
 
+	
 
 
     for i := 0; i < len(info.UniquePaths); i++ {
@@ -60,9 +61,6 @@ func main() {
 
 	fmt.Println("<--------------------------->")
 
-	for _, p := range info.TheBestpaths {
-		fmt.Println(p)
-	}
 	
 }
 
