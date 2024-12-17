@@ -24,16 +24,8 @@ func (g *GraphData) BFSHelper() {
 
 		lastRoomCurrent := currentPath[len(currentPath)-1]
 		if lastRoomCurrent == g.End {
-			intersectionPoint := true
-			for i := 1; i < len(currentPath)-1; i++ {
-				for j := 0; j < len(g.Paths); j++ {
-					if slices.Contains(g.Paths[j].rooms, currentPath[i]) {
-						intersectionPoint = false
-					}
-				}
-			}
-			if intersectionPoint {
-				path := &Paths{len: len(currentPath), rooms: currentPath}
+			if g.intersectionPoint(currentPath) {
+				path := Paths{len: len(currentPath), rooms: currentPath}
 				g.Paths = append(g.Paths, path)
 			}
 			continue
@@ -50,10 +42,26 @@ func (g *GraphData) BFSHelper() {
 	}
 
 	g.FindBestPaths()
+
+	g.PrintSteps()
 }
 
 func (g *GraphData) FindBestPaths() {
 	for _, path := range g.Paths {
-		fmt.Println(strings.Join(path.rooms," -> ") , "|| len :", path.len)
+		fmt.Println(strings.Join(path.rooms, " -> "), "|| len :", path.len)
 	}
+
+	// fmt.Println(g.Paths)
+}
+
+func (g *GraphData) intersectionPoint(currentPath []string) bool {
+	for i := 1; i < len(currentPath)-1; i++ {
+		for j := 0; j < len(g.Paths); j++ {
+			if slices.Contains(g.Paths[j].rooms, currentPath[i]) {
+				return false
+			}
+		}
+	}
+
+	return true
 }
