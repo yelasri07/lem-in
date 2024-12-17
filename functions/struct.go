@@ -12,6 +12,7 @@ type Info struct {
 	TheBestpaths [][]string
 	NumberOfrooms int
  	Res []string
+	N int
 }
 
 

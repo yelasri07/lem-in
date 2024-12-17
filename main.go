@@ -27,13 +27,13 @@ func main() {
 	
 	for _, v := range info.Tunnels[info.Start] {
 		info.Bfs(v)
-		if len(info.UniquePaths) > 2 {
-			info.FindGroups()
-		}
 	}
-	for _, p := range info.UniquePaths {
-		fmt.Println(p)
-	}
+
+	
+info.FindGroups()
+
+
+	
 	info.Jj()
 
 	// info.Ll()
