@@ -117,7 +117,7 @@ func isvesited(path []string, room string) bool {
 func FindTheUniqueePaths(p1, p2 []string) bool {
 	for i := 0; i < len(p1)-1; i++ {
 		for j := 0; j < len(p2)-1; j++ {
-			if i != j && p1[i] == p2[j] {
+			if p1[i] == p2[j] {
 				return false
 			}
 		}
@@ -126,31 +126,14 @@ func FindTheUniqueePaths(p1, p2 []string) bool {
 }
 
 func (y *Info) Jj() {
-
-
-	addedPaths := make(map[string]bool)
-
-	for j := 0; j < len(y.UniquePaths); j++ {
-		for i := 0; i < len(y.UniquePaths); i++ {
-			if j != i && FindTheUniqueePaths(y.UniquePaths[j], y.UniquePaths[i]) {
-				sortedPath := append([]string{}, y.UniquePaths[i]...)
-
-
-				hh := jj(sortedPath)
-
-				if !addedPaths[hh] {
-					y.TheBestpaths = append(y.TheBestpaths, y.UniquePaths[i])
-					addedPaths[hh] = true
-				}
-			}
-		}
+	if len(y.UniquePaths) <= 1 {
+		return
 	}
-}
-
-func jj(res []string) string {
-	b := ""
-	for _, v := range res {
-		b += v
+	thefirstpath := y.UniquePaths[0]
+	y.TheBestpaths = append(y.TheBestpaths, thefirstpath)
+	for j := 1; j < len(y.UniquePaths); j++ {
+		if FindTheUniqueePaths(thefirstpath, y.UniquePaths[j]) {
+			y.TheBestpaths = append(y.TheBestpaths, y.UniquePaths[j])
+		} 
 	}
-	return b
 }
