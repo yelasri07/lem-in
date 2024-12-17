@@ -2,7 +2,6 @@ package services
 
 import (
 	"bufio"
-	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -102,8 +101,10 @@ func (g *GraphData) ValidateFileContent(file *os.File) string {
 	for i := 0; i < len(g.Tunnels[g.Start]); i++ {
 		g.BFS(g.Tunnels[g.Start][i])
 	}
-	fmt.Println(g.Paths)
+
 	g.SortPath()
+
+	g.GroupMaker()
 	// g.Sendants(g.Paths)
 
 	return ""
