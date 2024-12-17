@@ -16,7 +16,7 @@ type GraphData struct {
 	End      string
 	Rooms    map[string][]string
 	Tunnels  map[string][]string
-	Paths    []*Paths
+	Paths    []Paths
 }
 
 type Paths struct {
