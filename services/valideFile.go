@@ -99,12 +99,12 @@ func (g *GraphData) ValidateFileContent(file *os.File) string {
 	if g.Start == "" || g.End == "" || g.Start == g.End {
 		return "Error start or end"
 	}
-	visited := make(map[string]bool)
-	for i := 0; i < len(g.Tunnels[g.Start]) ; i++ {
-		g.BFS(g.Tunnels[g.Start][i], &visited)
+	for i := 0; i < len(g.Tunnels[g.Start]); i++ {
+		g.BFS(g.Tunnels[g.Start][i])
 	}
 	fmt.Println(g.Paths)
-	g.Sendants(g.Paths)
+	g.SortPath()
+	// g.Sendants(g.Paths)
 
 	return ""
 }
