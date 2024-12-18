@@ -61,7 +61,6 @@ func (g *GraphData) GroupMaker() {
 		endRoom := len(path) - 1
 		a := &Groups{key: path[:endRoom]}
 		g.Groups = append(g.Groups, a)
-		// g.CombBfs(path[:endRoom])
 	}
 	for _, grp := range g.Groups {
 		g.CombBfs(grp)
@@ -75,7 +74,6 @@ func (g *GraphData) CombBfs(grp *Groups) {
 	for len(queue) > 0 {
 		currentPath = queue[0]
 		queue = queue[1:]
-		// fmt.Println(currentPath)
 		lastRoom := currentPath[len(currentPath)-1]
 		if g.End == lastRoom {
 			if Unique(grp, currentPath[1:]) {
