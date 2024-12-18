@@ -75,10 +75,6 @@ func (g *GraphData) CombBfs(grp *Groups) {
 		currentPath = queue[0]
 		queue = queue[1:]
 
-
-
-
-		
 		lastRoom := currentPath[len(currentPath)-1]
 		if g.End == lastRoom {
 			if Unique(grp, currentPath[1:]) {
