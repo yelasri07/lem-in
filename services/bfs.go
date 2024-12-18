@@ -2,7 +2,6 @@ package services
 
 import (
 	"slices"
-	"strings"
 )
 
 func (g *GraphData) BFS(r string) {
@@ -32,9 +31,6 @@ func (g *GraphData) BFSHelper(room string) {
 				newPath := append([]string{}, currentPath...)
 				newPath = append(newPath, neighbor)
 				queue = append(queue, newPath)
-				if neighbor != g.End {
-					visited[neighbor] = true
-				}
 			}
 		}
 	}
@@ -63,32 +59,53 @@ func UnlockRooms(path []string, inVistedRoom [][]string, visited map[string]bool
 func (g *GraphData) GroupMaker() {
 	for _, path := range g.Paths {
 		endRoom := len(path) - 1
-		g.CombBfs(path[:endRoom])
+		a := &Groups{key: path[:endRoom]}
+		g.Groups = append(g.Groups, a)
+		// g.CombBfs(path[:endRoom])
+	}
+	for _, grp := range g.Groups {
+		g.CombBfs(grp)
 	}
 }
 
-func (g *GraphData) CombBfs(p []string) {
+func (g *GraphData) CombBfs(grp *Groups) {
 	var queue [][]string
 	var currentPath []string
-	visited := make(map[string]bool)
 	queue = append(queue, []string{g.Start})
-	visited[g.Start] = true
-	for len(queue) > 1 {
+	for len(queue) > 0 {
 		currentPath = queue[0]
 		queue = queue[1:]
+		// fmt.Println(currentPath)
 		lastRoom := currentPath[len(currentPath)-1]
 		if g.End == lastRoom {
-			if Unique(p, currentPath[1:]) {
+			if Unique(grp, currentPath[1:]) {
+				grp.Comb = append(grp.Comb, currentPath)
+				continue
+			}
+		}
+
+		for _, neighbor := range g.Tunnels[currentPath[len(currentPath)-1]] {
+			if !slices.Contains(currentPath, neighbor) {
+				newPath := append([]string{}, currentPath...)
+				newPath = append(newPath, neighbor)
+				queue = append(queue, newPath)
+
+			}
+		}
+
+	}
+}
+
+func Unique(p *Groups, cp []string) bool {
+	for i := 0; i < len(cp)-1; i++ {
+		if slices.Contains(p.key, cp[i]) {
+			return false
+		}
+		for j := 0; j < len(p.Comb); j++ {
+			if slices.Contains(p.Comb[j], cp[i]) {
+				return false
 			}
 		}
 	}
-}
-
-func Unique(p, cp []string) bool {
-	for i := 0; i < len(cp)-1; i++ {
-		if slices.Contains(p, cp[i]) {
-			return true
-		}
-	}
-	return false
+	return true
 }

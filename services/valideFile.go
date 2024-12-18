@@ -2,6 +2,7 @@ package services
 
 import (
 	"bufio"
+	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -16,12 +17,13 @@ type GraphData struct {
 	End      string
 	Rooms    map[string][]string
 	Tunnels  map[string][]string
-	Paths    []Paths
+	Paths    [][]string
+	Groups   []*Groups
 }
 
-type Paths struct {
-	len int 
-	rooms []string
+type Groups struct {
+	key  []string
+	Comb [][]string
 }
 
 // Create an instance from the struct GraphData
@@ -110,8 +112,11 @@ func (g *GraphData) ValidateFileContent(file *os.File) string {
 	g.SortPath()
 
 	g.GroupMaker()
-	// g.Sendants(g.Paths)
 
+	// g.Sendants(g.Paths)
+	for _, grp := range g.Groups {
+		fmt.Println(grp)
+	}
 	return ""
 }
 
