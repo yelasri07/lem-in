@@ -1,67 +1,94 @@
 package services
 
 import (
-	"fmt"
 	"slices"
 	"strings"
 )
 
-func (g *GraphData) BFS() {
-	g.BFSHelper()
+func (g *GraphData) BFS(r string) {
+	g.BFSHelper(r)
 }
 
-func (g *GraphData) BFSHelper() {
+func (g *GraphData) BFSHelper(room string) {
 	var queue [][]string
 	var currentPath []string
+	visited := make(map[string]bool)
+	visited[g.Start] = true
+	visited[room] = true
 
-	queue = append(queue, []string{g.Start})
-
+	queue = append(queue, []string{room})
 	for len(queue) > 0 {
 
 		currentPath = queue[0]
-
 		queue = queue[1:]
 
-		lastRoomCurrent := currentPath[len(currentPath)-1]
-		if lastRoomCurrent == g.End {
-			if g.intersectionPoint(currentPath) {
-				path := Paths{len: len(currentPath), rooms: currentPath}
-				g.Paths = append(g.Paths, path)
-			}
-			continue
+		if string(currentPath[len(currentPath)-1]) == g.End {
+			g.Paths = append(g.Paths, currentPath)
+			break
 		}
 
-		for _, neighbor := range g.Tunnels[lastRoomCurrent] {
-			if !slices.Contains(currentPath, neighbor) {
+		for _, neighbor := range g.Tunnels[currentPath[len(currentPath)-1]] {
+			if !visited[neighbor] {
 				newPath := append([]string{}, currentPath...)
 				newPath = append(newPath, neighbor)
 				queue = append(queue, newPath)
+				if neighbor != g.End {
+					visited[neighbor] = true
+				}
 			}
 		}
-
 	}
-
-	g.FindBestPaths()
-
-	g.PrintSteps()
 }
 
-func (g *GraphData) FindBestPaths() {
+func (g *GraphData) SortPath() {
+	for i := 0; i <= len(g.Paths)-1; i++ {
+		for j := i + 1; j < len(g.Paths); j++ {
+			if len(g.Paths[i]) > len(g.Paths[j]) {
+				g.Paths[i], g.Paths[j] = g.Paths[j], g.Paths[i]
+			}
+		}
+	}
+}
+
+func UnlockRooms(path []string, inVistedRoom [][]string, visited map[string]bool) {
+	for _, p := range inVistedRoom {
+		for _, r := range p[2:] {
+			if !slices.Contains(path, r) {
+				visited[r] = false
+			}
+		}
+	}
+}
+
+func (g *GraphData) GroupMaker() {
 	for _, path := range g.Paths {
-		fmt.Println(strings.Join(path.rooms, " -> "), "|| len :", path.len)
+		endRoom := len(path) - 1
+		g.CombBfs(path[:endRoom])
 	}
-
-	// fmt.Println(g.Paths)
 }
 
-func (g *GraphData) intersectionPoint(currentPath []string) bool {
-	for i := 1; i < len(currentPath)-1; i++ {
-		for j := 0; j < len(g.Paths); j++ {
-			if slices.Contains(g.Paths[j].rooms, currentPath[i]) {
-				return false
+func (g *GraphData) CombBfs(p []string) {
+	var queue [][]string
+	var currentPath []string
+	visited := make(map[string]bool)
+	queue = append(queue, []string{g.Start})
+	visited[g.Start] = true
+	for len(queue) > 1 {
+		currentPath = queue[0]
+		queue = queue[1:]
+		lastRoom := currentPath[len(currentPath)-1]
+		if g.End == lastRoom {
+			if Unique(p, currentPath[1:]) {
 			}
 		}
 	}
+}
 
-	return true
+func Unique(p, cp []string) bool {
+	for i := 0; i < len(cp)-1; i++ {
+		if slices.Contains(p, cp[i]) {
+			return true
+		}
+	}
+	return false
 }
