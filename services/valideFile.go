@@ -116,8 +116,6 @@ func (g *GraphData) ValidateFileContent(file *os.File) string {
 
 	g.SortPath()
 
-	g.GroupMaker()
-
 	// g.Sendants(g.Paths)
 	// for _, grp := range g.Groups {
 	// 	fmt.Println(grp)

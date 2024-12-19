@@ -47,6 +47,8 @@ func (g *GraphData) SortPath() {
 	}
 }
 
+
+
 func (g *GraphData) GroupMaker() {
 	for _, path := range g.Paths {
 		a := &Groups{key: path, lenPaths: 1}
