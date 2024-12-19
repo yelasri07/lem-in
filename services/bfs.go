@@ -15,7 +15,7 @@ func (g *GraphData) BFSHelper(room string) {
 	visited[g.Start] = true
 	visited[room] = true
 
-	queue = append(queue, []string{room})
+	queue = append(queue, []string{g.Start,room})
 	for len(queue) > 0 {
 
 		currentPath = queue[0]
@@ -46,20 +46,10 @@ func (g *GraphData) SortPath() {
 	}
 }
 
-func UnlockRooms(path []string, inVistedRoom [][]string, visited map[string]bool) {
-	for _, p := range inVistedRoom {
-		for _, r := range p[2:] {
-			if !slices.Contains(path, r) {
-				visited[r] = false
-			}
-		}
-	}
-}
 
 func (g *GraphData) GroupMaker() {
 	for _, path := range g.Paths {
-		endRoom := len(path) - 1
-		a := &Groups{key: path[:endRoom]}
+		a := &Groups{key: path}
 		g.Groups = append(g.Groups, a)
 	}
 	for _, grp := range g.Groups {
