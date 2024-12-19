@@ -46,15 +46,7 @@ func (g *GraphData) SortPath() {
 	}
 }
 
-func UnlockRooms(path []string, inVistedRoom [][]string, visited map[string]bool) {
-	for _, p := range inVistedRoom {
-		for _, r := range p[2:] {
-			if !slices.Contains(path, r) {
-				visited[r] = false
-			}
-		}
-	}
-}
+
 
 func (g *GraphData) GroupMaker() {
 	for _, path := range g.Paths {
