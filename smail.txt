@@ -1,4 +1,4 @@
- 10
+10
 ##start
 start 1 6
 0 4 8
@@ -31,4 +31,4 @@ h-A
 e-end
 c-k
 n-m
-h-n 
+h-n
