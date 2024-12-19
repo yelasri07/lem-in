@@ -15,8 +15,8 @@ t2 3 1
 b1 3 1
 b2 3 1
 start-c1
-start-b2
 start-a1 
+start-b1
 c1-t1
 c1-c2
 t1-t2
