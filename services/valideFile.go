@@ -21,16 +21,16 @@ type GraphData struct {
 }
 
 type Groups struct {
-	key  *PathInfos
-	Comb []*PathInfos
+	key      *PathInfos
+	Comb     []*PathInfos
 	lenPaths int
 }
 
 type PathInfos struct {
-	len int 
-	Path []string 
+	len  int
+	Path []string
 }
- 
+
 // Create an instance from the struct GraphData
 func NewGraphData() *GraphData {
 	return &GraphData{

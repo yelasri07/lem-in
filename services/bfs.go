@@ -15,7 +15,7 @@ func (g *GraphData) BFSHelper(room string) {
 	visited[g.Start] = true
 	visited[room] = true
 
-	queue = append(queue, []string{g.Start, room})
+	queue = append(queue, []string{room})
 	for len(queue) > 0 {
 
 		currentPath = queue[0]
@@ -70,7 +70,7 @@ func (g *GraphData) CombBfs(grp *Groups) {
 		lastRoom := currentPath[len(currentPath)-1]
 		if g.End == lastRoom {
 			if Unique(grp, currentPath[1:]) {
-				p := &PathInfos{len: len(currentPath), Path: currentPath}
+				p := &PathInfos{len: len(currentPath), Path: currentPath[1:]}
 				grp.Comb = append(grp.Comb, p)
 				grp.lenPaths++
 				continue
