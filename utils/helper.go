@@ -22,11 +22,13 @@ func IsValidRoom(str string) bool {
 	return true
 }
 
+// check if the tunnel is valid or not
 func IsValidTunnel(str string) bool {
 	tunnel := strings.Split(str, "-")
 	return len(tunnel) == 2
 }
 
+// Check if the tunnel is contained within the rooms or not
 func ContainsRoom(str string, rooms map[string][]string) bool {
 	tunnel := strings.Split(str, "-")
 	for _, room := range tunnel {
@@ -34,12 +36,5 @@ func ContainsRoom(str string, rooms map[string][]string) bool {
 			return false
 		}
 	}
-	return true
-}
-
-func IsneighborStart() bool {
-
-	
-
 	return true
 }

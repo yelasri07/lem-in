@@ -2,7 +2,7 @@ package services
 
 import (
 	"bufio"
-	"log"
+	"errors"
 	"os"
 	"strconv"
 	"strings"
@@ -14,10 +14,10 @@ type GraphData struct {
 	NbOfAnts int
 	Start    string
 	End      string
-	Rooms    map[string][]string
-	Tunnels  map[string][]string
-	Paths    []*PathInfos
-	Groups   []*Groups
+	Rooms    map[string][]string // Contains the room name and its coordinates.
+	Tunnels  map[string][]string // Contains the room and its connected neighbors.
+	Paths    []*PathInfos        // The slice contains structs, each representing information about a path.
+	Groups   []*Groups           // The slice contains structs, each representing a group of paths.
 }
 
 type Groups struct {
@@ -48,19 +48,19 @@ func (g *GraphData) ValidateFileContent(file *os.File) string {
 	var err error
 
 	scanner := bufio.NewScanner(file)
-	lineError := 0
+
 	var count int
 	for scanner.Scan() {
-		lineError++
+
 		line := strings.TrimSpace(scanner.Text())
 		if count == 0 {
 			g.NbOfAnts, err = strconv.Atoi(line)
 			if err != nil {
-				return "invalid number of ants"
+				return "ERROR: invalid data format"
 			}
 
 			if g.NbOfAnts <= 0 {
-				return "invalid number of ants"
+				return "ERROR: invalid data format"
 			}
 			count = 1
 			continue
@@ -73,7 +73,7 @@ func (g *GraphData) ValidateFileContent(file *os.File) string {
 		room := strings.Fields(line)
 		if count == 2 || count == 3 {
 			if !utils.IsValidRoom(line) {
-				return "Invalid start or end"
+				return "ERROR: invalid data format"
 			}
 			if count == 2 {
 				g.Start = room[0]
@@ -85,7 +85,7 @@ func (g *GraphData) ValidateFileContent(file *os.File) string {
 
 		if line == "##start" {
 			if g.Start != "" {
-				return "Invalid start"
+				return "ERROR: invalid data format"
 			}
 			count = 2
 			continue
@@ -93,58 +93,64 @@ func (g *GraphData) ValidateFileContent(file *os.File) string {
 
 		if line == "##end" {
 			if g.End != "" {
-				return "Invalid end"
+				return "ERROR: invalid data format"
 			}
 			count = 3
 			continue
 		}
 		if !utils.IsValidRoom(line) && !utils.IsValidTunnel(line) {
-			return "Invalid format of room, tunnel, or coordinates in line " + strconv.Itoa(lineError)
+			return "ERROR: invalid data format"
 		}
 		if utils.IsValidRoom(line) {
-			g.AddRoom(line)
+			err := g.AddRoom(line)
+			if err != nil {
+				return "ERROR: invalid data format"
+			}
 			continue
 		}
 		if utils.IsValidTunnel(line) {
-			g.AddNeighbor(line)
+			err := g.AddNeighbor(line)
+			if err != nil {
+				return "ERROR: invalid data format"
+			}
 		}
 
 	}
 
 	if g.Start == "" || g.End == "" || g.Start == g.End {
-		return "Error start or end"
+		return "ERROR: invalid data format"
 	}
+
 	for i := 0; i < len(g.Tunnels[g.Start]); i++ {
 		g.BFS(g.Tunnels[g.Start][i])
 	}
 
-	g.SortPath()
-
 	g.GroupMaker()
 
-	// g.Sendants(g.Paths)
-	// for _, grp := range g.Groups {
-	// 	fmt.Println(grp)
-	// }
-
 	g.FilterPaths()
+
 	return ""
 }
 
-func (g *GraphData) AddRoom(line string) {
+// AddRoom adds a new room to the collection.
+func (g *GraphData) AddRoom(line string) error {
 	room := strings.Fields(line)
 	if _, exist := g.Rooms[room[0]]; exist {
-		log.Fatal("Room already exists, you cannot duplicate rooms")
+		return errors.New("ERROR: invalid data format")
 	}
+
 	g.Rooms[room[0]] = append(g.Rooms[room[0]], room[1], room[2])
+	return nil
 }
 
-func (g *GraphData) AddNeighbor(line string) {
+// AddNeighbor adds a new tunnel to the collection.
+func (g *GraphData) AddNeighbor(line string) error {
 	if !utils.ContainsRoom(line, g.Rooms) {
-		log.Fatal("You might be trying to add a non-existent room")
+		return errors.New("ERROR: invalid data format")
 	}
 
 	tunnel := strings.Split(line, "-")
 	g.Tunnels[tunnel[0]] = append(g.Tunnels[tunnel[0]], tunnel[1])
 	g.Tunnels[tunnel[1]] = append(g.Tunnels[tunnel[1]], tunnel[0])
+	return nil
 }
