@@ -32,7 +32,7 @@ func Unique(p *Groups, currentPath []string) bool {
 	return true
 }
 
-// FilterPaths give the max len group 
+// FilterPaths give the max len group
 func (g *GraphData) FilterPaths() {
 	max := g.Groups[0]
 	for _, grp := range g.Groups {
@@ -44,5 +44,5 @@ func (g *GraphData) FilterPaths() {
 	g.Paths = append(g.Paths, max.key)
 	g.Paths = append(g.Paths, max.Comb...)
 
-	PrintSteps(g.Paths, g.NbOfAnts)
+	PrintSteps(g.Paths, g.NbOfAnts, g.End)
 }
