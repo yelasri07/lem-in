@@ -7,14 +7,14 @@ import (
 )
 
 func PrintSteps(paths []*PathInfos, nbAnts int, er string) {
-	Ants := make([]*PathInfos, nbAnts) // had ants hiya nmel li ghadi ydouz me3a dak lpath wach fhemti wela mafhmtich
+	Ants := make([]*PathInfos, nbAnts)
 	var Grps []AntsGroup
 
-	for _, p := range paths {
-		fmt.Println(p.Path)
-	}
+	// for _, p := range paths {
+	// 	fmt.Println(p.Path)
+	// }
 
-	fmt.Println("-------------------")
+	// fmt.Println("-------------------")
 
 	grpAnt := 0
 	for i := 1; i <= nbAnts; i++ {
@@ -30,11 +30,11 @@ func PrintSteps(paths []*PathInfos, nbAnts int, er string) {
 		Ants[i-1] = paths[k]
 	}
 
-	for i, c := range Ants {
-		fmt.Printf("nemla %v flpath : %v\n", i+1, c.Path)
-	}
+	// for i, c := range Ants {
+	// 	fmt.Printf("nemla %v flpath : %v\n", i+1, c.Path)
+	// }
 
-	fmt.Println("-------------")
+	// fmt.Println("-------------")
 
 	a := []int{}
 	p := [][]string{}
