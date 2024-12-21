@@ -121,8 +121,6 @@ func (g *GraphData) ValidateFileContent(file *os.File) string {
 		g.BFS(g.Tunnels[g.Start][i])
 	}
 
-	//g.SortPath()
-
 	g.GroupMaker()
 
 	g.FilterPaths()

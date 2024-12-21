@@ -6,7 +6,7 @@ func PrintSteps(paths []*PathInfos, nbAnts int) {
 	Ants := make([]*PathInfos, nbAnts)
 
 	for _, p := range paths {
-		fmt.Println(p)
+		fmt.Println(p.Path)
 	}
 
 	fmt.Println("-------------------")
