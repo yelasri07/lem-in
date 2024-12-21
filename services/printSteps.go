@@ -2,12 +2,11 @@ package services
 
 import (
 	"fmt"
-	"slices"
 	"strings"
 )
 
 func PrintSteps(paths []*PathInfos, nbAnts int, er string) {
-	Ants := make([]*PathInfos, nbAnts) // had ants hiya nmel li ghadi ydouz me3a dak lpath wach fhemti wela mafhmtich
+	Ants := make([]*PathInfos, nbAnts)
 	var Grps []AntsGroup
 
 	for _, p := range paths {
@@ -55,24 +54,39 @@ func PrintSteps(paths []*PathInfos, nbAnts int, er string) {
 	PrintTurns(Grps, er)
 }
 
+func allPathsEmpty(groups []AntsGroup) bool {
+	for _, group := range groups {
+		for _, path := range group.Paths {
+			if len(path) > 0 {
+				return false
+			}
+		}
+	}
+	return true
+}
+
+// Imprimer les tours
 func PrintTurns(g []AntsGroup, er string) {
 	Turns := [][]string{}
 	turn := []string{}
 	ar := []string{}
 
-	for len(g[len(g)-1].Paths[len(g[len(g)-1].Paths)-1]) > 0 {
+	// Boucle jusqu'à ce que tous les chemins soient vides
+	for !allPathsEmpty(g) {
 		for j := 0; j < len(g); j++ {
 			for i := 0; i < len(g[j].Ants); i++ {
 				if len(g[j].Paths[i]) == 0 {
 					continue
 				}
 
-				if !slices.Contains(turn, g[j].Paths[i][0]) {
+				// Vérifie si l'étape actuelle est déjà occupée
+				if !contains(turn, g[j].Paths[i][0]) {
 					if g[j].Paths[i][0] != er {
 						turn = append(turn, g[j].Paths[i][0])
 					}
 					s := fmt.Sprintf("L%d-%s", g[j].Ants[i], g[j].Paths[i][0])
 					ar = append(ar, s)
+					// Passe à l'étape suivante
 					g[j].Paths[i] = g[j].Paths[i][1:]
 				}
 			}
@@ -87,4 +101,13 @@ func PrintTurns(g []AntsGroup, er string) {
 	for _, ele := range Turns {
 		fmt.Println(strings.Join(ele, " "))
 	}
+}
+
+func contains(slice []string, item string) bool {
+	for _, v := range slice {
+		if v == item {
+			return true
+		}
+	}
+	return false
 }
