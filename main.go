@@ -9,20 +9,20 @@ import (
 
 func main() {
 	if len(os.Args) != 2 {
-		fmt.Println("Enter file name")
+		fmt.Println("please provide the file name as an argument.")
 		return
 	}
 
 	file, err := os.Open(os.Args[1])
 	if err != nil {
-		fmt.Println("File error")
+		fmt.Printf("Error: Unable to open the file %s. Please check if the file exists and is accessible.\n", os.Args[1])
 		return
 	}
 	defer file.Close()
 
-	infos := services.NewGraphData()
+	Graph := services.NewGraphData()
 
-	msg := infos.ValidateFileContent(file)
+	msg := Graph.ValidateFileContent(file)
 	if msg != "" {
 		fmt.Println(msg)
 		return

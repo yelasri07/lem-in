@@ -7,7 +7,7 @@ func (g *GraphData) FilterPaths() {
 			max = grp
 		}
 	}
-	g.Paths = []*PathInfos{}
+
 	g.Paths = append(g.Paths, max.key)
 	g.Paths = append(g.Paths, max.Comb...)
 
