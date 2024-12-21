@@ -11,5 +11,5 @@ func (g *GraphData) FilterPaths() {
 	g.Paths = append(g.Paths, max.key)
 	g.Paths = append(g.Paths, max.Comb...)
 
-	PrintSteps(g.Paths, g.NbOfAnts)
+	PrintSteps(g.Paths, g.NbOfAnts,g.End)
 }

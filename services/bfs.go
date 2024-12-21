@@ -22,7 +22,7 @@ func (g *GraphData) BFSHelper(room string) {
 		queue = queue[1:]
 
 		if string(currentPath[len(currentPath)-1]) == g.End {
-			p := &PathInfos{len: len(currentPath), Path: currentPath}
+			p := &PathInfos{len: len(currentPath)+1, Path: currentPath}
 			g.Paths = append(g.Paths, p)
 			break
 		}
