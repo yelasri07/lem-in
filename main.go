@@ -27,40 +27,16 @@ func main() {
 	
 	for _, v := range info.Tunnels[info.Start] {
 		info.Bfs(v)
-		if len(info.UniquePaths) >= 2 {
-			info.FindGroups()
-		}
-	}
-
-
-
-	
-	info.Jj()
-
-	
-
-
-    for i := 0; i < len(info.UniquePaths); i++ {
-		info.Hh(info.UniquePaths[i])
 	}
 	
-
-
-	for _, o := range info.All {
-		fmt.Println(o)
-		fmt.Println("<--------------------------->")
-	}
-
-
-
-	fmt.Println("<--------------------------->")
-
 	for _, p := range info.UniquePaths {
-		fmt.Println(p)
+		info.FindMorePaths(p)
 	}
-
-	fmt.Println("<--------------------------->")
-
+	for _, p := range info.UniquePaths {
+		info.FindGroups(p)
+	}
+	
+	info.FindTheBestGroup()
 	
 }
 

@@ -113,7 +113,7 @@ func (a *Info) FindRooms(line string) error {
 		}
 		a.Rooms[sl[0]] = append(a.Rooms[sl[0]], sl[1])
 		a.Rooms[sl[0]] = append(a.Rooms[sl[0]], sl[2])
-		a.NumberOfrooms++
+		
 	}
 
 	if strings.Contains(line, "-") {

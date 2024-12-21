@@ -1,27 +1,37 @@
 package functions
 
-
-func (y * Info) Hh(path []string) {
+func (y *Info) FindGroups(path []string) {
 	var NewMatrix [][]string
+
+		NewMatrix = append(NewMatrix, path)
 	
-	NewMatrix = append(NewMatrix, path)
-	for i:=0 ; i < len(y.TheBestpaths); i++ {
-		if Unique(y.TheBestpaths[i] , path) {
-			NewMatrix = append(NewMatrix, y.TheBestpaths[i])
+
+	for i := 0; i < len(y.UniquePaths); i++ {
+		
+		if unique(NewMatrix, y.UniquePaths[i]) {
+			NewMatrix = append(NewMatrix, y.UniquePaths[i])
 		}
+
 	}
-	
-	y.All = append(y.All, NewMatrix)	
+
+	y.All = append(y.All, NewMatrix)
+	y.NumberOfGroups++
 }
 
+func unique(mat [][]string, p []string) bool {
+	mat = append(mat, p)
 
-func Unique(p1, p2 []string) bool {
-	for i := 0; i < len(p1)-1; i++ {
-		for j := 0; j < len(p2)-1; j++ {
-			if p1[i] == p2[j] {
+	mymap := make(map[string]bool)
+
+	for _, p := range mat {
+		for i := 0; i < len(p)-1; i++ {
+			if !mymap[p[i]] {
+				mymap[p[i]] = true
+			} else {
 				return false
 			}
 		}
 	}
 	return true
 }
+

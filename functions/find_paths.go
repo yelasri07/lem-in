@@ -1,9 +1,5 @@
 package functions
 
-import (
-	"fmt"
-)
-
 func (y *Info) Bfs(n string) {
 	var queue [][]string
 
@@ -18,10 +14,9 @@ func (y *Info) Bfs(n string) {
 		lastroom := path[len(path)-1]
 
 		if lastroom == y.End {
-
 			newpath := append([]string{}, path...)
-
 			y.UniquePaths = append(y.UniquePaths, newpath)
+
 			break
 		}
 
@@ -35,21 +30,12 @@ func (y *Info) Bfs(n string) {
 	}
 }
 
-func (y *Info) FindGroups() {
-	status, ig1, ig2 := FindTheUniquePaths(y.UniquePaths[0], y.UniquePaths[len(y.UniquePaths)-1])
-	if status {
-	} else {
-		if len(y.Tunnels[y.UniquePaths[len(y.UniquePaths)-1][ig1-1]]) > 2 {
-			N := y.UniquePaths[len(y.UniquePaths)-1][ig1-1]
-			b := y.UniquePaths[len(y.UniquePaths)-1][ig1]
-			y.BBfs(N, b)
-		} else if len(y.Tunnels[y.UniquePaths[0][ig2-1]]) > 2 {
-			fmt.Println(y.UniquePaths[0][ig2-1])
-			N := y.UniquePaths[0][ig2-1]
-			b := y.UniquePaths[0][ig2]
-			y.BBfs(N, b)
-		}
-	}
+
+
+func (y *Info) FindMorePaths(p []string) {
+	n := p[0]
+	b := p[1]
+	y.BBfs(n, b)
 }
 
 func (y *Info) BBfs(n string, b string) {
@@ -68,9 +54,7 @@ func (y *Info) BBfs(n string, b string) {
 		if lastroom == y.End {
 
 			newpath := append([]string{}, path...)
-
 			y.UniquePaths = append(y.UniquePaths, newpath)
-			break
 
 		}
 
@@ -82,17 +66,6 @@ func (y *Info) BBfs(n string, b string) {
 			}
 		}
 	}
-}
-
-func FindTheUniquePaths(p1, p2 []string) (bool, int, int) {
-	for i := 1; i < len(p1)-1; i++ {
-		for j := 1; j < len(p2)-1; j++ {
-			if p1[i] == p2[j] {
-				return false, j, i
-			}
-		}
-	}
-	return true, 0, 0
 }
 
 func ok(n []string, a string) bool {
@@ -113,27 +86,3 @@ func isvesited(path []string, room string) bool {
 	return false
 }
 
-// ///////////////////////////////////
-func FindTheUniqueePaths(p1, p2 []string) bool {
-	for i := 0; i < len(p1)-1; i++ {
-		for j := 0; j < len(p2)-1; j++ {
-			if p1[i] == p2[j] {
-				return false
-			}
-		}
-	}
-	return true
-}
-
-func (y *Info) Jj() {
-	if len(y.UniquePaths) <= 1 {
-		return
-	}
-	thefirstpath := y.UniquePaths[0]
-	y.TheBestpaths = append(y.TheBestpaths, thefirstpath)
-	for j := 1; j < len(y.UniquePaths); j++ {
-		if FindTheUniqueePaths(thefirstpath, y.UniquePaths[j]) {
-			y.TheBestpaths = append(y.TheBestpaths, y.UniquePaths[j])
-		} 
-	}
-}
