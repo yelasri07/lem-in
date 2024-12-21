@@ -14,5 +14,7 @@ type Info struct {
 
  	Res []string
 	NumberOfGroups int
-	All  [][][]string
+	AllGroups [][][]string
+	UniqueGroups [][][]string
+
 }

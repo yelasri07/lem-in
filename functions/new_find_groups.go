@@ -14,7 +14,7 @@ func (y *Info) FindGroups(path []string) {
 
 	}
 
-	y.All = append(y.All, NewMatrix)
+	y.AllGroups = append(y.AllGroups, NewMatrix)
 	y.NumberOfGroups++
 }
 
