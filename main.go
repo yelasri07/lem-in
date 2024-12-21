@@ -35,7 +35,7 @@ func main() {
 	for _, p := range info.UniquePaths {
 		info.FindGroups(p)
 	}
-	
+
 	info.FindTheBestGroup()
 	
 }

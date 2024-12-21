@@ -15,7 +15,7 @@ func (y *Info) FindGroups(path []string) {
 	}
 
 	y.AllGroups = append(y.AllGroups, NewMatrix)
-	y.NumberOfGroups++
+	
 }
 
 func unique(mat [][]string, p []string) bool {

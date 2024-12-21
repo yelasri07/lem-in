@@ -3,24 +3,36 @@ package functions
 import "fmt"
 
 func (y *Info) FindTheBestGroup() {
-	fmt.Println(y.NumberOfAnts)
-	fmt.Println(y.NumberOfGroups)
-	var res []int
 
+	var res []int
 	for _, v := range y.AllGroups {
 		b := hi(v)
-		if uq(res , b) {
+		if uq(res, b) {
 			y.UniqueGroups = append(y.UniqueGroups, v)
+			y.NumberOfGroups++
 		}
 		res = append(res, b)
 	}
-	fmt.Println(res)
+
 	for _, v := range y.UniqueGroups {
-		fmt.Println(v)
+		status, intg := y.IsGoodGroup(v)
+
+		if status {
+			fmt.Println(intg)
+		    y.Print(v, y.NumberOfAnts , y.End)
+		
+			break
+		}
+
 	}
 }
 
-func uq(res []int , b int) bool {
+func (y *Info) IsGoodGroup(matrix [][]string) (bool, int) {
+	b := hi(matrix)
+	return true, b
+}
+
+func uq(res []int, b int) bool {
 	if res == nil {
 		return true
 	}
@@ -28,10 +40,9 @@ func uq(res []int , b int) bool {
 		if it == b {
 			return false
 		}
- 	}
+	}
 	return true
 }
-
 
 func hi(g [][]string) int {
 	c := 0
