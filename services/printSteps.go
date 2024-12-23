@@ -6,6 +6,7 @@ func PrintSteps(paths []*PathInfos, nbAnts int, er string) {
 	a := []int{}
 	p := [][]string{}
 	grpAnt := 0
+
 	for i := 1; i <= nbAnts; i++ {
 		petitPath := paths[0]
 		k := 0
@@ -17,16 +18,14 @@ func PrintSteps(paths []*PathInfos, nbAnts int, er string) {
 		}
 		petitPath.len++
 		Ants[i-1] = paths[k]
+
 		if grpAnt != len(paths) {
-			for _, ele := range paths {
-				if VerifyDupPath(p, ele.Path, er) {
-					continue
-				}
+
+			if i <= nbAnts {
 				a = append(a, i)
-				p = append(p, ele.Path)
-				grpAnt++
-				break
+				p = append(p, petitPath.Path)
 			}
+			grpAnt++
 		}
 
 		if grpAnt == len(paths) || i == len(Ants)-1 {
@@ -36,6 +35,11 @@ func PrintSteps(paths []*PathInfos, nbAnts int, er string) {
 			p = [][]string{}
 			grpAnt = 0
 		}
+
+	}
+	if len(a) != 0 && len(p) != 0 {
+		st := &AntsGroup{Ants: a, Paths: p}
+		Grps = append(Grps, *st)
 	}
 
 	PrintTurns(Grps, er)
@@ -43,9 +47,9 @@ func PrintSteps(paths []*PathInfos, nbAnts int, er string) {
 
 func VerifyDupPath(paths [][]string, p []string, er string) bool {
 	for _, path := range paths {
-		for i := 0; i < len(path)-1; i++ { // Ignore le dernier élément de 'path'
-			for j := 0; j < len(p)-1; j++ { // Ignore le dernier élément de 'p'
-				if path[i] == p[j] { // Vérifie si les éléments sont identiques
+		for i := 0; i < len(path)-1; i++ {
+			for j := 0; j < len(p)-1; j++ {
+				if path[i] == p[j] {
 					return true
 				}
 			}

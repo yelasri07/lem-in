@@ -22,7 +22,7 @@ func (g *GraphData) BFSHelper(room string) {
 		queue = queue[1:]
 
 		if string(currentPath[len(currentPath)-1]) == g.End {
-			p := &PathInfos{len: len(currentPath)+1, Path: currentPath}
+			p := &PathInfos{len: len(currentPath) + 1, Path: currentPath}
 			g.Paths = append(g.Paths, p)
 			break
 		}
@@ -47,11 +47,9 @@ func (g *GraphData) SortPath() {
 	}
 }
 
-
-
 func (g *GraphData) GroupMaker() {
 	for _, path := range g.Paths {
-		a := &Groups{key: path, lenPaths: 1}
+		a := &Groups{key: path, lenPaths: 0}
 		g.Groups = append(g.Groups, a)
 	}
 	for _, grp := range g.Groups {
@@ -89,13 +87,17 @@ func (g *GraphData) CombBfs(grp *Groups) {
 	}
 }
 
-func Unique(p *Groups, cp []string) bool {
-	for i := 0; i < len(cp)-1; i++ {
-		if slices.Contains(p.key.Path, cp[i]) {
+func Unique(p *Groups, currentPath []string) bool {
+	if p.key.Path[0] == currentPath[0] {
+		return false
+	}
+	for i := 0; i < len(currentPath)-1; i++ {
+
+		if slices.Contains(p.key.Path, currentPath[i]) {
 			return false
 		}
 		for j := 0; j < len(p.Comb); j++ {
-			if slices.Contains(p.Comb[j].Path, cp[i]) {
+			if slices.Contains(p.Comb[j].Path, currentPath[i]) {
 				return false
 			}
 		}
