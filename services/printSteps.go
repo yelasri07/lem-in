@@ -1,17 +1,11 @@
 package services
 
-import "fmt"
-
 func PrintSteps(paths []*PathInfos, nbAnts int, er string) {
 	Ants := make([]*PathInfos, nbAnts)
 	var Grps []AntsGroup
 	a := []int{}
 	p := [][]string{}
 	grpAnt := 0
-
-	for _, p := range paths {
-		fmt.Println(p)
-	}
 
 	for i := 1; i <= nbAnts; i++ {
 		petitPath := paths[0]
