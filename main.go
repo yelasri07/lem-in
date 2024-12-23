@@ -30,11 +30,17 @@ func main() {
 	}
 	
 	for _, p := range info.UniquePaths {
+		
 		info.FindMorePaths(p)
 	}
 	for _, p := range info.UniquePaths {
+		fmt.Println("--------")
+		fmt.Println(p)
+		fmt.Println("---------")		
 		info.FindGroups(p)
 	}
+
+
 
 	info.FindTheBestGroup()
 	

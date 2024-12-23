@@ -30,12 +30,12 @@ func (y *Info) Bfs(n string) {
 	}
 }
 
-
-
 func (y *Info) FindMorePaths(p []string) {
-	n := p[0]
-	b := p[1]
-	y.BBfs(n, b)
+	if len(p) > 3 {
+		n := p[0]
+		b := p[1]
+		y.BBfs(n, b)
+	}
 }
 
 func (y *Info) BBfs(n string, b string) {
@@ -85,4 +85,3 @@ func isvesited(path []string, room string) bool {
 	}
 	return false
 }
-

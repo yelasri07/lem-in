@@ -3,19 +3,15 @@ package functions
 func (y *Info) FindGroups(path []string) {
 	var NewMatrix [][]string
 
-		NewMatrix = append(NewMatrix, path)
-	
+	NewMatrix = append(NewMatrix, path)
 
 	for i := 0; i < len(y.UniquePaths); i++ {
-		
 		if unique(NewMatrix, y.UniquePaths[i]) {
 			NewMatrix = append(NewMatrix, y.UniquePaths[i])
 		}
-
 	}
 
 	y.AllGroups = append(y.AllGroups, NewMatrix)
-	
 }
 
 func unique(mat [][]string, p []string) bool {
@@ -34,4 +30,3 @@ func unique(mat [][]string, p []string) bool {
 	}
 	return true
 }
-

@@ -65,7 +65,6 @@ func conv(nm int) []string {
 }
 
 func Sort(res [][]string) [][]string {
-
 	for i := 0; i < len(res); i++ {
 		if i != len(res)-1 && len(res[i]) > len(res[i+1]) {
 			res[i], res[i+1] = res[i+1], res[i]
