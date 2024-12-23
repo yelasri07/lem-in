@@ -19,6 +19,9 @@ func (g *GraphData) GroupMaker() {
 
 // Unique checks if the given path (currentPath) shares any common room with the group's key path
 func Unique(p *Groups, currentPath []string) bool {
+	if len(currentPath) == 1 {
+		return false
+	}
 	for i := 0; i < len(currentPath)-1; i++ {
 		if slices.Contains(p.key.Path, currentPath[i]) {
 			return false

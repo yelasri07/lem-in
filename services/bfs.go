@@ -42,8 +42,8 @@ func (g *GraphData) CombBFS(grp *Groups) {
 		lastRoom := currentPath[len(currentPath)-1]
 		if g.End == lastRoom {
 			if Unique(grp, currentPath[1:]) {
-				p := &PathInfos{len: len(currentPath), Path: currentPath[1:]}
-				grp.Comb = append(grp.Comb, p)
+				path := &PathInfos{len: len(currentPath), Path: currentPath[1:]}
+				grp.Comb = append(grp.Comb, path)
 				grp.lenPaths++
 				continue
 			}

@@ -129,6 +129,7 @@ func (g *GraphData) ValidateFileContent(file *os.File) string {
 
 	g.FilterPaths()
 
+
 	return ""
 }
 
