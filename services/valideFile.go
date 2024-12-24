@@ -31,11 +31,6 @@ type PathInfos struct {
 	Path []string
 }
 
-type AntsGroup struct {
-	Ants  []int
-	Paths [][]string
-}
-
 // Create an instance from the struct GraphData
 func NewGraphData() *GraphData {
 	return &GraphData{
