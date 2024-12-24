@@ -7,17 +7,17 @@ func PrintSteps(paths []*PathInfos, nbAnts int, end string) {
 	grpAntCount := 0
 
 	for i := 1; i <= nbAnts; i++ {
-		petitPath := paths[0]
+		shortPath := paths[0]
 		for j := 0; j < len(paths); j++ {
-			if paths[j].len < petitPath.len {
-				petitPath = paths[j]
+			if paths[j].len < shortPath.len {
+				shortPath = paths[j]
 			}
 		}
-		petitPath.len++
+		shortPath.len++
 
 		if grpAntCount != len(paths) {
 			ants = append(ants, i)
-			currentPath = append(currentPath, petitPath.Path)
+			currentPath = append(currentPath, shortPath.Path)
 			grpAntCount++
 		}
 
