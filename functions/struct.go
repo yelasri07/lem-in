@@ -11,9 +11,11 @@ type Info struct {
 	UniquePaths [][]string
 
 	Res []string
-
+	StartWithEnd bool
 	NumberOfGroups int
 	AllGroups    [][][]string
 	UniqueGroups [][][]string
+	SG int
+	GG int
 }
 

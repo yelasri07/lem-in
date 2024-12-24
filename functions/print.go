@@ -9,33 +9,50 @@ func (y *Info) Print(res [][]string) {
 	res = Sort(res)
 	NubOfAnts := conv(y.NumberOfAnts)
 
-	// index := 0
-	fmt.Println(res)
+	var print [][][]string
+	var step [][]string
+
 	for len(NubOfAnts) > 0 {
 		for i := 0; i < len(res); i++ {
 			if len(res) == 1 {
-				res[i] = append(res[i], NubOfAnts[i])
+				
+				step = append(step, []string{NubOfAnts[i]})
+
+				step = append(step, res[i])
+
+				print = append(print, step)
+
 				NubOfAnts = NubOfAnts[1:]
 				continue
 			}
 			if i != len(res)-1 && len(res[i]) <= len(res[i+1]) {
 
-				res[i] = append(res[i], NubOfAnts[i])
+				
+				step = append(step, []string{NubOfAnts[i]})
+
+				step = append(step, res[i])
+
+				print = append(print, step)
+				
 				NubOfAnts = NubOfAnts[1:]
 
 			} else if i != len(res)-1 && len(res[i]) > len(res[i+1]) {
 
-				res[i+1] = append(res[i+1], NubOfAnts[0])
+				step = append(step, []string{NubOfAnts[i]})
 
+				step = append(step, res[i+1])
+
+				print = append(print, step)
+				
 				NubOfAnts = NubOfAnts[1:]
 
 			}
 		}
 	}
-	y.hhhhhhhh(res)
+	y.hhhhhhhh(print)
 }
 
-func (y *Info) hhhhhhhh(res [][]string) {
+func (y *Info) hhhhhhhh(res [][][]string) {
 	for _, v := range res {
 		fmt.Println(v)
 	}

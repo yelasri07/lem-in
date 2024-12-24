@@ -19,7 +19,7 @@ func main() {
 		fmt.Println(err)
 		return
 	}
-	
+
 	/////////////
 
 	info.Bfs(info.Start)
@@ -29,29 +29,38 @@ func main() {
 	}
 
 	info.Res = append(info.Res, info.Tunnels[info.Start]...)
-	
-	
+
 	for _, v := range info.Tunnels[info.Start] {
 		info.Bfs(v)
 	}
-	
+
 	for _, p := range info.UniquePaths {
-		
 		info.FindMorePaths(p)
 	}
-	for _, p := range info.UniquePaths {
-		// fmt.Println("--------")
-		// fmt.Println(p)
-		// fmt.Println("---------")		
-	    info.FindGroups(p)
-	}
-	for _, v := range info.AllGroups {
-		fmt.Println(v)
-	}
 
+	
+	var res []string
+
+	for _, p := range info.UniquePaths {
+		if !info.StartWithEnd && len(p) == 1 {
+			info.StartWithEnd = true
+			res = p
+			info.AllGroups = append(info.AllGroups, [][]string{p})
+		}
+		info.FindGroups(p)
+	}
+	
+
+	if info.StartWithEnd {
+
+		var varrr [][][]string
+		varrr = append(varrr, [][]string{res})
+		varrr = append(varrr, info.AllGroups...)
+
+		info.AllGroups = varrr
+	}
 
 	info.FindTheBestGroup()
-	
+
+
 }
-
-
