@@ -48,4 +48,6 @@ func (g *GraphData) FilterPaths() {
 
 	g.Paths = append(g.Paths, max.key)
 	g.Paths = append(g.Paths, max.Comb...)
+
+	g.Groups = []*Groups{}
 }

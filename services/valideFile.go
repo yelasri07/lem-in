@@ -122,11 +122,15 @@ func (g *GraphData) ValidateFileContent(file *os.File) string {
 		return "ERROR: invalid data format"
 	}
 
+	g.Rooms = map[string][]string{}
+
 	for i := 0; i < len(g.Tunnels[g.Start]); i++ {
 		g.BFS(g.Tunnels[g.Start][i])
 	}
 
 	g.GroupMaker()
+
+	g.Tunnels = map[string][]string{}
 
 	g.FilterPaths()
 
