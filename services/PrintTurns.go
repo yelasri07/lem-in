@@ -1,70 +1,58 @@
 package services
 
-// func PrintTurns(g []AntsGroup, er string) {
-// 	Turns := [][]string{}
-// 	turn := []string{}
-// 	ar := []string{}
-// 	awor := GetAntswithOneRoom(g)
-// 	for !allPathsEmpty(g) {
-// 		for j := 0; j < len(g); j++ {
-// 			for i := 0; i < len(g[j].Ants); i++ {
-// 				if len(g[j].Paths[i]) == 0 {
-// 					continue
-// 				}
-// 				if slices.Contains(awor, g[j].Ants[i]) && NotinTurn(ar, awor) {
-// 					continue
-// 				}
-// 				if !contains(turn, g[j].Paths[i][0]) {
-// 					if g[j].Paths[i][0] != er {
-// 						turn = append(turn, g[j].Paths[i][0])
-// 					}
-// 					s := fmt.Sprintf("L%d-%s", g[j].Ants[i], g[j].Paths[i][0])
-// 					ar = append(ar, s)
-// 					g[j].Paths[i] = g[j].Paths[i][1:]
-// 				}
-// 			}
-// 		}
-// 		if len(ar) > 0 {
-// 			Turns = append(Turns, ar)
-// 		}
-// 		turn = []string{}
-// 		ar = []string{}
-// 	}
+import (
+	"fmt"
+	"slices"
+	"strings"
+)
 
-// 	for _, ele := range Turns {
-// 		fmt.Println(strings.Join(ele, " "))
-// 	}
-// }
+func allPathsEmpty(groups [][]string) bool {
+	for _, group := range groups {
+		if len(group) > 0 {
+			return false
+		}
+	}
+	return true
+}
 
-// func contains(slice []string, item string) bool {
-// 	for _, v := range slice {
-// 		if v == item {
-// 			return true
-// 		}
-// 	}
-// 	return false
-// }
+func (g *GraphData) PrintTurns(ants [][]string) {
+	turns := [][]string{}
+	turn := []string{}
+	step := []string{}
+	for !allPathsEmpty(ants) {
 
-// func GetAntswithOneRoom(g []AntsGroup) []int {
-// 	Ants := []int{}
-// 	for _, ele := range g {
-// 		for i, a := range ele.Paths {
-// 			if len(a) == 1 {
-// 				Ants = append(Ants, ele.Ants[i])
-// 			}
-// 		}
-// 	}
-// 	return Ants
-// }
+		badTunnel := false
 
-// func NotinTurn(ar []string, awor []int) bool {
-// 	for i := 0; i < len(ar); i++ {
-// 		for j := 0; j < len(awor); j++ {
-// 			ants := fmt.Sprintf("L%d-", awor[j])
-// 			if strings.HasPrefix(ar[i], ants) {
-// 				return true
-// 			}
-// 		}
-// 	}
-// 	return false
-// }
+		for i := 0; i < len(ants); i++ {
+			if len(ants[i]) == 0 {
+				continue
+			}
+
+			s := fmt.Sprintf("L%v-%v", i+1, ants[i][0])
+			if len(ants[i]) == 2 && ants[i][0] == g.End && ants[i][1] == g.End {
+				if !badTunnel {
+					ants[i] = ants[i][2:]
+					step = append(step, s)
+					badTunnel = true
+				}
+			} else if !slices.Contains(turn, ants[i][0]) {
+				if ants[i][0] != g.End {
+					turn = append(turn, ants[i][0])
+				}
+				ants[i] = ants[i][1:]
+				step = append(step, s)
+			}
+
+		}
+
+		turns = append(turns, step)
+
+		turn = []string{}
+		step = []string{}
+
+	}
+
+	for _, turn := range turns {
+		fmt.Println(strings.Join(turn, " "))
+	}
+}

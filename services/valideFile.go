@@ -130,7 +130,7 @@ func (g *GraphData) ValidateFileContent(file *os.File) string {
 
 	g.FilterPaths()
 
-	PrintSteps(g.Paths, g.NbOfAnts, g.End)
+	g.assignAntPaths()
 
 	return ""
 }
