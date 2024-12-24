@@ -1,12 +1,10 @@
 package services
 
-import "fmt"
-
-func PrintSteps(paths []*PathInfos, nbAnts int, er string) {
+func PrintSteps(paths []*PathInfos, nbAnts int, end string) {
 	var Grps []AntsGroup
-	ant := []int{}
-	p := [][]string{}
-	grpAnt := 0
+	ants := []int{}
+	currentPath := [][]string{}
+	grpAntCount := 0
 
 	for i := 1; i <= nbAnts; i++ {
 		petitPath := paths[0]
@@ -17,27 +15,25 @@ func PrintSteps(paths []*PathInfos, nbAnts int, er string) {
 		}
 		petitPath.len++
 
-		if grpAnt != len(paths) {
-			if i <= nbAnts {
-				ant = append(ant, i)
-				p = append(p, petitPath.Path)
-			}
-			grpAnt++
+		if grpAntCount != len(paths) {
+			ants = append(ants, i)
+			currentPath = append(currentPath, petitPath.Path)
+			grpAntCount++
 		}
 
-		if grpAnt == len(paths) {
-			st := &AntsGroup{Ants: ant, Paths: p}
+		if grpAntCount == len(paths) {
+			st := &AntsGroup{Ants: ants, Paths: currentPath}
 			Grps = append(Grps, *st)
-			ant = []int{}
-			p = [][]string{}
-			grpAnt = 0
+			ants = []int{}
+			currentPath = [][]string{}
+			grpAntCount = 0
 		}
 
 	}
-	if len(ant) != 0 && len(p) != 0 {
-		st := &AntsGroup{Ants: ant, Paths: p}
+	if len(ants) != 0 && len(currentPath) != 0 {
+		st := &AntsGroup{Ants: ants, Paths: currentPath}
 		Grps = append(Grps, *st)
 	}
-	fmt.Println(Grps)
-	PrintTurns(Grps, er)
+
+	PrintTurns(Grps, end)
 }
