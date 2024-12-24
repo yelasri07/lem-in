@@ -20,8 +20,14 @@ func main() {
 		return
 	}
 	
-	
-	
+	/////////////
+
+	info.Bfs(info.Start)
+
+	if len(info.UniquePaths) == 1 {
+		info.UniquePaths[0] = info.UniquePaths[0][1:]
+	}
+
 	info.Res = append(info.Res, info.Tunnels[info.Start]...)
 	
 	
@@ -34,12 +40,14 @@ func main() {
 		info.FindMorePaths(p)
 	}
 	for _, p := range info.UniquePaths {
-		fmt.Println("--------")
-		fmt.Println(p)
-		fmt.Println("---------")		
-		info.FindGroups(p)
+		// fmt.Println("--------")
+		// fmt.Println(p)
+		// fmt.Println("---------")		
+	    info.FindGroups(p)
 	}
-
+	for _, v := range info.AllGroups {
+		fmt.Println(v)
+	}
 
 
 	info.FindTheBestGroup()

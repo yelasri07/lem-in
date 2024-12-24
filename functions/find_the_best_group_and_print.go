@@ -3,7 +3,6 @@ package functions
 import "fmt"
 
 func (y *Info) FindTheBestGroup() {
-
 	var res []int
 	for _, v := range y.AllGroups {
 		b := hi(v)
@@ -13,22 +12,23 @@ func (y *Info) FindTheBestGroup() {
 		}
 		res = append(res, b)
 	}
-
+	
 	for _, v := range y.UniqueGroups {
 		status, intg := y.IsGoodGroup(v)
 
 		if status {
 			fmt.Println(intg)
-		    y.Print(v, y.NumberOfAnts , y.End)
-		
+
+			y.Print(v)
 			break
 		}
-
+		
 	}
 }
 
 func (y *Info) IsGoodGroup(matrix [][]string) (bool, int) {
 	b := hi(matrix)
+	
 	return true, b
 }
 
