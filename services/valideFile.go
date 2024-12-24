@@ -30,6 +30,7 @@ type PathInfos struct {
 	len  int
 	Path []string
 }
+
 type AntsGroup struct {
 	Ants  []int
 	Paths [][]string
@@ -129,6 +130,7 @@ func (g *GraphData) ValidateFileContent(file *os.File) string {
 
 	g.FilterPaths()
 
+	PrintSteps(g.Paths, g.NbOfAnts, g.End)
 
 	return ""
 }
